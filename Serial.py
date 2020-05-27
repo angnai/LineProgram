@@ -1,0 +1,130 @@
+import sys
+import serial
+import time
+import signal
+import threading
+import pymysql
+import datetime
+import subprocess
+ 
+
+ 
+
+line = [] #라인 단위로 데이터 가져올 리스트 변수
+
+port = '/dev/ttyUSB0' # 시리얼 포트
+baud = 115200 # 시리얼 보드레이트(통신속도)
+
+exitThread = False   # 쓰레드 종료용 변수
+
+
+#쓰레드 종료용 시그널 함수
+def handler(signum, frame):
+	extThread = True
+
+
+#데이터 처리할 함수
+def parsing_data(data):
+	nLen = data[1]
+	nOp = data[2]
+
+	sedD = []
+
+	if nOp == bytes({0x01}):
+		sedD.append(0x44)
+		sedD.append(0x00)
+		sedD.append(0x02)
+		sedD.append(0x01)
+		sedD.append(0xFF)
+		sedD.append(0x43)
+		ser.write(sedD)
+	elif nOp == bytes({0x30}):
+		nYear = int.from_bytes(data[3],'big',signed=False) * 256
+		nYear += int.from_bytes(data[4],'big',signed=False)
+		
+		nMon = int.from_bytes(data[5],'big',signed=False)
+		
+		nDay = int.from_bytes(data[6],'big',signed=False)
+		
+		nHour = int.from_bytes(data[7],'big',signed=False)
+		
+		nMin = int.from_bytes(data[8],'big',signed=False)
+		
+		nSec = int.from_bytes(data[9],'big',signed=False)
+		
+		nD0 = int.from_bytes(data[10],'big',signed=False)
+		nD1 = int.from_bytes(data[11],'big',signed=False)
+
+		
+		t = (nYear, nMon, nDay, nHour, nMin, nSec, 0, 0, 0)
+		t = time.mktime(t)
+		timeA = (time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t)))
+
+		
+		tmp1 = str(nD0)
+		tmp2 = str(nD1)
+
+		#데이터 입력
+		sql="insert into data values (\'" + timeA + "\',\'"  + tmp1 + "\',\'" + tmp2 + "\')"
+		cur.execute(sql)
+		con.commit()
+		
+		sedD.append(0x44)
+		sedD.append(0x00)
+		sedD.append(0x02)
+		sedD.append(0x30)
+		sedD.append(0xFF)
+		sedD.append(0x43)
+		ser.write(sedD)
+
+#본 쓰레드
+def readThread(ser):
+	global line
+	global exitThread
+	global con 
+	global cur
+	
+	con = pymysql.connect(host="localhost", port=3306, user="root", password="1234",
+                       db='test', charset='utf8')
+	cur = con.cursor()
+
+	stxFlag = False
+	# 쓰레드 종료될때까지 계속 돌림
+	while not exitThread:
+		try:
+			#데이터가 있있다면
+			for c in ser.read():
+				#line 변수에 차곡차곡 추가하여 넣는다.
+				if stxFlag:
+					#line.append(chr(c))
+					line.append(bytes({c}))
+
+				if c == 0x44: #라인의 시작을 만나면..
+					stxFlag = True
+					#line 변수 초기화
+					del line[:]      
+
+				if c == 0x43: #라인의 끝을 만나면..
+					#데이터 처리 함수로 호출
+					#print(line)
+					parsing_data(line)
+
+			time.sleep(0.01)          
+				# 작업들
+		except KeyboardInterrupt:
+			# Ctrl+C 입력시 예외 발생
+			print("angnai")
+			sys.exit()
+
+if __name__ == "__main__":
+	#종료 시그널 등록
+	#signal.signal(signal.SIGINT, handler)
+
+	#시리얼 열기
+	ser = serial.Serial(port, baud, timeout=0)
+
+	#시리얼 읽을 쓰레드 생성
+	thread = threading.Thread(target=readThread, args=(ser,))
+
+	#시작!
+	thread.start()
