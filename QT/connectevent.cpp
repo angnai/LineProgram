@@ -16,7 +16,7 @@ void ConnectEvent::cppSignaltoQmlSlot()
 	slotTimerAlarm();
 	timer = new QTimer();
 	connect(timer, SIGNAL(timeout()), this, SLOT(slotTimerAlarm()));
-	timer->start(200);
+    timer->start(500);
 
 	exeC = false;
 }
@@ -31,8 +31,9 @@ void ConnectEvent::setWindow(QQuickWindow* Window)
 void ConnectEvent::slotTimerAlarm()
 {
 
-	QTcpSocket socket;
-	socket.connectToHost("127.0.0.1", 9999);
+    QTcpSocket socket;
+    socket.connectToHost("127.0.0.1", 9999);
+
 
 	if (!socket.waitForConnected(10*1000)) {
 		return;
@@ -50,7 +51,7 @@ void ConnectEvent::slotTimerAlarm()
 	socket.write(hex);
 
 
-	qDebug() << "writed";
+    //qDebug() << "writed";
 
 	data[0] = 's';
 	data[1] = 'c';
@@ -64,7 +65,7 @@ void ConnectEvent::slotTimerAlarm()
 	data2 = "scan1";
 	socket.write(hex);
 
-	qDebug() << "writed";
+    //qDebug() << "writed";
 	QByteArray s_data;
 	qint64 n;
 	socket.waitForReadyRead(10*1000);
@@ -79,7 +80,7 @@ void ConnectEvent::slotTimerAlarm()
 		}
 	}
 	s_data = socket.readAll();//QString::fromUtf8(socket.readAll());
-	qDebug() << "recv : " << QString::fromUtf8(s_data);
+    //qDebug() << "recv : " << QString::fromUtf8(s_data);
 
 	emit cppSignaltestData(QString::fromUtf8(s_data));
 }

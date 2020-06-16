@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 	ConnectEvent *event = new ConnectEvent();
 	event->setWindow(qobject_cast<QQuickWindow *>(engine.rootObjects()[0]));
-	event->cppSignaltoQmlSlot();
+    //event->cppSignaltoQmlSlot();
 
 
 

@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.6
+//import QtQuick.Controls 1.6
+
 Window {
 	visible: true
 	width: 1024
@@ -8,16 +9,20 @@ Window {
 	title: qsTr("Hello World")
 
 	property var strArray2;
-	property var pointValue;
+    property var pointValue;
+    property var pointValue2;
+    property var pointValue3;
 	property var tValue;
-	//var pointValue = new Array(10)
+    //var pointValue = new Array(20)
 
 	function qmlSlotTestData(data){//slot으로 등록한 함수
 		//console.log("qmlSlotTestData data:" + data);
 		var strArray=data.toString().split("\r\n");
 
-		var n = parseInt(strArray[0]);
-		pointValue = new Array(20)
+        var n = parseInt(strArray[0]);
+        pointValue = new Array(7)
+        pointValue2 = new Array(7)
+        pointValue3 = new Array(7)
 		tValue = new Array(20)
 
 		for(var i=1; i<=n ; i++)
@@ -25,15 +30,17 @@ Window {
 			var strsplit=strArray[i].toString().split("\t");
 			//console.log(strArray[i]);
 			tValue[i-1] = (strsplit[0]);
-			tValue[i-1] = tValue[i-1].substring(11, 19);
-			pointValue[i-1] = parseInt(strsplit[1]);
+            tValue[i-1] = tValue[i-1].substring(11, 19);
+            pointValue[i-1] = parseInt(strsplit[1]);
+            pointValue2[i-1] = parseInt(strsplit[2]);
+            pointValue3[i-1] = parseInt(strsplit[3]);
 		}
 
 		strArray2 = strArray;
 
 	}
 	Timer {
-		interval: 100
+        interval: 100
 		running: true
 		triggeredOnStart: true
 		repeat: true
@@ -74,7 +81,7 @@ Window {
 			{
 				posX = i*70;
 				ctx.lineTo(posX,pointValue[i]*6);
-				console.log(posX + " " + tValue[i]);
+                //console.log(posX + " " + tValue[i]);
 			}
 			posX = 0;
 			lt1.x = posX*70;
