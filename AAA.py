@@ -73,7 +73,7 @@ def data_count():
 
 
 def data_search(data):
-	sql = "SELECT * FROM data WHERE time > %s LIMIT 10"
+	sql = "SELECT * FROM data WHERE time > %s LIMIT 4"
 	num = cur.execute(sql,data)
 	if num < 0:
 		print("Input range1 error")
@@ -83,7 +83,7 @@ def data_search(data):
 	conn.commit()
 	
 	sql = "SELECT * FROM data WHERE time < %s order by time desc LIMIT %s"
-	num += cur.execute(sql,(data,20-num))
+	num += cur.execute(sql,(data,7-num))
 
 	if num < 0:
 		print("Input range2 error")
@@ -100,7 +100,7 @@ def data_search(data):
 	return trans_str
 
 def data_read():
-	sql="select * from data order by time desc limit 20"
+	sql="select * from data order by indexA desc limit 7"
 	num = cur.execute(sql)
 	
 	result = cur.fetchall()
@@ -108,7 +108,7 @@ def data_read():
 	print("count=",num)
 	trans_str = ("{}\r\n".format(num))
 	for v in result_sort:
-		trans_str += ("{}\t{}\t{}\r\n".format(v[0],v[1],v[2]))
+		trans_str += ("{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4]))
 
 	conn.commit()
 	return trans_str
@@ -122,7 +122,9 @@ if __name__ == "__main__":
 
 
 	while True:
-		conn = pymysql.connect(host="angnai.duckdns.org", user='root', password='1234', port=6082, db='test', charset='utf8')
+		#conn = pymysql.connect(host="angnai.duckdns.org", user='root', password='1234', port=6082, db='test', charset='utf8')
+		con = pymysql.connect(host="localhost", user='root', password='1234', port=3306, db='test', charset='utf8')
+	
 		cur = conn.cursor()
 		
 

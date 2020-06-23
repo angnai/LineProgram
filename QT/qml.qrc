@@ -1,5 +1,25 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>../image/BG.png</file>
+        <file>../image/l_p1.png</file>
+        <file>../image/l_p2.png</file>
+        <file>../image/l_p3.png</file>
+        <file>../image/left_box.png</file>
+        <file>../image/p1.png</file>
+        <file>../image/p2.png</file>
+        <file>../image/p3.png</file>
+        <file>../image/point.png</file>
+        <file>../image/경고까지.png</file>
+        <file>../image/두께감소치.png</file>
+        <file>../image/로고_그린.png</file>
+        <file>../image/로고_원본.png</file>
+        <file>../image/모니터링.png</file>
+        <file>../image/사용일.png</file>
+        <file>../image/선택일.png</file>
+        <file>../image/선택일_장착일_right.png</file>
+        <file>../image/연결하기.png</file>
+        <file>../image/위험까지.png</file>
+        <file>../image/장착일.png</file>
     </qresource>
 </RCC>

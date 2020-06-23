@@ -1,597 +1,551 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
 //import QtQuick.Controls 1.6
+import QtQuick.Controls 2.2
 
 Window {
-	visible: true
-	width: 1024
-	height: 600
-	title: qsTr("Hello World")
+    visible: true
+    width: 1024
+    height: 600
+    x: 0
+    y: 0
+    title: qsTr("Hello World")
+    visibility: "Maximized"    // does not hide the windows taskbar
+    //visibility: "FullScreen" // does     hide the windows taskbar
+    flags: Qt.FramelessWindowHint|Qt.Window // frameless, but with an icon on the windows taskbar
 
-	property var strArray2;
+    property var strArray2;
     property var pointValue;
     property var pointValue2;
     property var pointValue3;
-	property var tValue;
+    property var tValue;
+    property var indexval;
+    property var maxHeight : 2000;
+    property var warningHeight : 230;
+    property var errorHeight : 200;
+    property var pointVar;
+    property bool mbImageClicked : true;
+    property string strVmm: "{0} mm"
+    property string strV: "{0}"
+    property var exitCnt : 0;
+
+
     //var pointValue = new Array(20)
 
-	function qmlSlotTestData(data){//slot으로 등록한 함수
-		//console.log("qmlSlotTestData data:" + data);
-		var strArray=data.toString().split("\r\n");
+    function qmlSlotTestData(data){//slot으로 등록한 함수
+        //console.log("qmlSlotTestData data:" + data);
+        var strArray=data.toString().split("\r\n");
+        if(strArray == "") return
 
-        var n = parseInt(strArray[0]);
+        pointVar = parseInt(strArray[0]);
         pointValue = new Array(7)
         pointValue2 = new Array(7)
         pointValue3 = new Array(7)
-		tValue = new Array(20)
+        indexval = new Array(7)
+        tValue = new Array(7)
 
-		for(var i=1; i<=n ; i++)
-		{
-			var strsplit=strArray[i].toString().split("\t");
-			//console.log(strArray[i]);
-			tValue[i-1] = (strsplit[0]);
+        for(var i=1; i<=pointVar ; i++)
+        {
+            var strsplit=strArray[i].toString().split("\t");
+            //console.log(strArray[i]);
+            tValue[i-1] = (strsplit[0]);
             tValue[i-1] = tValue[i-1].substring(11, 19);
             pointValue[i-1] = parseInt(strsplit[1]);
             pointValue2[i-1] = parseInt(strsplit[2]);
             pointValue3[i-1] = parseInt(strsplit[3]);
-		}
+            indexval[i-1] = parseInt(strsplit[4]);
+        }
 
-		strArray2 = strArray;
+        img12.x = 148 + 75*(pointVar-1);
+        img12.y = 280-img12.height;
 
-	}
-	Timer {
+        //pointVar;
+
+        lb_img6_1.text = "\n%1".arg((warningHeight/100).toFixed(2))
+        lb_img6_2.text ="\n%1".arg((errorHeight/100).toFixed(2))
+        lb_img7.text = "\n%1mm".arg((pointValue[pointVar-1]/100).toFixed(2))
+        lb_img8.text = "\n%1mm".arg((pointValue2[pointVar-1]/100).toFixed(2))
+        lb_img9.text = "\n%1mm".arg((pointValue3[pointVar-1]/100).toFixed(2))
+        lb_img10_1.text = "\n%1 mm".arg((warningHeight/100).toFixed(2))
+        lb_img10_2.text = "\n%1 mm".arg((warningHeight/100).toFixed(2))
+        lb_img10_3.text = "\n%1 mm".arg((warningHeight/100).toFixed(2))
+        lb_img11_1.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
+        lb_img11_2.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
+        lb_img11_3.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
+
+        root.requestPaint()
+    }
+    /*
+    Timer {
         interval: 100
-		running: true
-		triggeredOnStart: true
-		repeat: true
-		onTriggered: root.requestPaint()
-	}
+        running: true
+        triggeredOnStart: true
+        repeat: true
+        onTriggered: root.requestPaint()
+    }
+    */
+
+    Image {
+        id: img0
+        x: 0
+        y: 0
+        width: 1024
+        height: 600
+        source: "../image/BG.png"
+    }
+
+    Canvas {
+        id: root
+        // canvas size
+        width: 1024; height: 600
+        scale: 1
+        z: 0
+
+        // handler to override for drawing
+        onPaint: {
+            // get context to draw with
+            x: 35
+            y: 244
+            width: 636
+            height: 334
 
 
-	Canvas {
-		id: root
-		// canvas size
-		width: 1024; height: 600
-		scale: 1
-		z: 0
-		rotation: 180
-		// handler to override for drawing
-		onPaint: {
-			// get context to draw with
-			var ctx = getContext("2d")
-			ctx.fillStyle = "blue"//Qt.rgba(0, 0, 255, 1);
-			ctx.fillRect(0, 0, width, height);
 
-			// setup the stroke
-			ctx.lineWidth = 2
-			ctx.strokeStyle = "white"
-			// setup the fill
-			ctx.fillStyle = "steelblue"
-			// begin a new path to draw
-			ctx.beginPath()
+            var ctx = getContext("2d")
+            var ctx2 = getContext("2d")
 
-			ctx.moveTo(0,0)
-			/*for(var i=0;i<10;i++){
-				ctx.lineTo(1024-(i*),pointValue[10-i])
+            ctx.drawImage('qrc:/../image/left_box.png', 35, 244)
+            ctx.save()
 
-			}*/
-			var posX;
+            // setup the stroke
 
-			for(var i=0;i<15;i++)
-			{
-				posX = i*70;
-				ctx.lineTo(posX,pointValue[i]*6);
-                //console.log(posX + " " + tValue[i]);
-			}
-			posX = 0;
-			lt1.x = posX*70;
-			lt1.y = pointValue[posX]*6+20;
-			lt1.text = String(pointValue[posX]);
-			tt1.x = posX*70;
-			tt1.text = String(tValue[posX]);
+            var posX;
+            var AddPosX;
+            var middlePosY,minPosY,Height;
+            var PosYVal;
 
-			posX++;
-			lt2.x = posX*70;
-			lt2.y = pointValue[posX]*6+20;
-			lt2.text = String(pointValue[posX]);
-			tt2.x = posX*70;
-			tt2.text = String(tValue[posX]);
+            AddPosX = 75
+            middlePosY = 468;
+            minPosY = 496;
+            Height = (middlePosY-300);
 
-			posX++;
-			lt3.x = posX*70;
-			lt3.y = pointValue[posX]*6+20;
-			lt3.text = String(pointValue[posX]);
-			tt3.x = posX*70;
-			tt3.text = String(tValue[posX]);
-
-			posX++;
-			lt4.x = posX*70;
-			lt4.y = pointValue[posX]*6+20;
-			lt4.text = String(pointValue[posX]);
-			tt4.x = posX*70;
-			tt4.text = String(tValue[posX]);
-
-			posX++;
-			lt5.x = posX*70;
-			lt5.y = pointValue[posX]*6+20;
-			lt5.text = String(pointValue[posX]);
-			tt5.x = posX*70;
-			tt5.text = String(tValue[posX]);
-
-			posX++;
-			lt6.x = posX*70;
-			lt6.y = pointValue[posX]*6+20;
-			lt6.text = String(pointValue[posX]);
-			tt6.x = posX*70;
-			tt6.text = String(tValue[posX]);
-
-			posX++;
-			lt7.x = posX*70;
-			lt7.y = pointValue[posX]*6+20;
-			lt7.text = String(pointValue[posX]);
-			tt7.x = posX*70;
-			tt7.text = String(tValue[posX]);
-
-			posX++;
-			lt8.x = posX*70;
-			lt8.y = pointValue[posX]*6+20;
-			lt8.text = String(pointValue[posX]);
-			tt8.x = posX*70;
-			tt8.text = String(tValue[posX]);
-
-			posX++;
-			lt9.x = posX*70;
-			lt9.y = pointValue[posX]*6+20;
-			lt9.text = String(pointValue[posX]);
-			tt9.x = posX*70;
-			tt9.text = String(tValue[posX]);
-
-			posX++;
-			lt10.x = posX*70;
-			lt10.y = pointValue[posX]*6+20;
-			lt10.text = String(pointValue[posX]);
-			tt10.x = posX*70;
-			tt10.text = String(tValue[posX]);
-
-			posX++;
-			lt11.x = posX*70;
-			lt11.y = pointValue[posX]*6+20;
-			lt11.text = String(pointValue[posX]);
-			tt11.x = posX*70;
-			tt11.text = String(tValue[posX]);
-
-			posX++;
-			lt12.x = posX*70;
-			lt12.y = pointValue[posX]*6+20;
-			lt12.text = String(pointValue[posX]);
-			tt12.x = posX*70;
-			tt12.text = String(tValue[posX]);
-
-			posX++;
-			lt13.x = posX*70;
-			lt13.y = pointValue[posX]*6+20;
-			lt13.text = String(pointValue[posX]);
-			tt13.x = posX*70;
-			tt13.text = String(tValue[posX]);
-
-			posX++;
-			lt14.x = posX*70;
-			lt14.y = pointValue[posX]*6+20;
-			lt14.text = String(pointValue[posX]);
-			tt14.x = posX*70;
-			tt14.text = String(tValue[posX]);
-
-			posX++;
-			lt15.x = posX*70;
-			lt15.y = pointValue[posX]*6+20;
-			lt15.text = String(pointValue[posX]);
-			tt15.x = posX*70;
-			tt15.text = String(tValue[posX]);
-
-			ctx.lineTo(980,0)
-			/*
+            ctx.lineWidth = 2
 
 
-			ctx.lineTo(140,70)
-			ctx.lineTo(210,30)
-			ctx.lineTo(280,90)
-			ctx.lineTo(350,120)
-			ctx.lineTo(420,70)
-			ctx.lineTo(490,340)
-			ctx.lineTo(560,600)
-			ctx.lineTo(630,200)
-			ctx.lineTo(700,20)
-			ctx.lineTo(770,700)
-			ctx.lineTo(840,80)
-			ctx.lineTo(910,50)
-			ctx.lineTo(980,50)
-			ctx.lineTo(980,0)
-			*/
-			ctx.closePath()
-			// fill using fill style
-			ctx.fill()
-			// stroke using line width and stroke style
-			ctx.stroke()
 
-			var ctx2 = getContext("2d")
-			ctx2.beginPath()
-			ctx2.fillStyle = "white"//Qt.rgba(255, 255, 255, 1)
-			ctx.moveTo(0,0)
-			for(var i=0;i<15;i++)
-			{
-				posX = i*70;
-				ctx2.arc(posX,pointValue[i]*6 , 5, 0, 2*Math.PI)
-				ctx.moveTo(posX,pointValue[i]*6)
+            // begin a new path to draw
+            ctx.beginPath()
+            ctx.strokeStyle = "rgb(150,175,173)"
+            ctx2.fillStyle = "rgb(150,175,173)"
 
-				//console.log(posX + " " + pointValue[i]);
-			}
-			/*
-			ctx2.arc(0,50 , 5, 0, 2*Math.PI)
-			ctx.moveTo(0,50)
-			ctx2.arc(70,20 , 5, 0, 2*Math.PI)
-			ctx.moveTo(70,20)
-			ctx2.arc(140,70, 5, 0, 2*Math.PI)
-			ctx.moveTo(140,70)
-			ctx2.arc(210,30, 5, 0, 2*Math.PI)
-			ctx.moveTo(210,30)
-			ctx2.arc(280,90, 5, 0, 2*Math.PI)
-			ctx.moveTo(280,90)
-			ctx2.arc(350,120 , 5, 0, 2*Math.PI)
-			ctx.moveTo(350,120)
-			ctx2.arc(420,70 , 5, 0, 2*Math.PI)
-			ctx.moveTo(420,70)
-			ctx2.arc(490,340 , 5, 0, 2*Math.PI)
-			ctx.moveTo(490,340)
-			ctx2.arc(560,600 , 5, 0, 2*Math.PI)
-			ctx.moveTo(560,600)
-			ctx2.arc(630,200 , 5, 0, 2*Math.PI)
-			ctx.moveTo(630,200)
-			ctx2.arc(700,20 , 5, 0, 2*Math.PI)
-			ctx.moveTo(700,20)
-			ctx2.arc(770,700 , 5, 0, 2*Math.PI)
-			ctx.moveTo(770,700)
-			ctx2.arc(840,80 , 5, 0, 2*Math.PI)
-			ctx.moveTo(840,80)
-			ctx2.arc(910,50 , 5, 0, 2*Math.PI)
-			ctx.moveTo(910,50)
-			ctx2.arc(980,50 , 5, 0, 2*Math.PI)
-			ctx.moveTo(980,50)
-			*/
-			ctx2.closePath()
-			ctx2.fill()
-		}
+            posX = 164;
+            if(pointValue[0] < errorHeight) ctx.moveTo(posX,minPosY);
+            else if(pointValue[0] < warningHeight) ctx.moveTo(posX,middlePosY);
+            else ctx.moveTo(posX,middlePosY-(Height*((pointValue[0]-warningHeight)/(maxHeight-warningHeight))));
 
-		Text {
-			id: label1
-			x: 931
-			y: 435
-			text: qsTr("Warning Value")
-			rotation: 180
-			font.pixelSize: 15
-		}
+            for(var i=0;i<7;i++)
+            {
+                if(pointValue[i] < errorHeight) ctx.lineTo(posX,minPosY);
+                else if(pointValue[i] < warningHeight) ctx.lineTo(posX,middlePosY);
+                else ctx.lineTo(posX, middlePosY-(Height*((pointValue[i]-warningHeight)/(maxHeight-warningHeight))).toFixed(0));
+                posX = posX+AddPosX;
+                //console.log(pointValue[i],middlePosY-(Height*((pointValue[i]-warningHeight)/(maxHeight-warningHeight))).toFixed(0));
+            }
+            ctx.stroke()
 
-		Text {
-			id: label2
-			x: 931
-			y: 417
-			text: qsTr("Error Value")
-			rotation: 180
-			font.pixelSize: 15
-		}
+            ctx2.beginPath()
+            posX = 164;
+            for(var i=0;i<7;i++)
+            {
+                if(pointValue[i] < errorHeight) PosYVal = minPosY;
+                else if(pointValue[i] < warningHeight) PosYVal = middlePosY;
+                else PosYVal = middlePosY-(Height*((pointValue[i]-warningHeight)/(maxHeight-warningHeight)));
 
-		Text {
-			id: warningVal
-			x: 890
-			y: 435
-			text: qsTr("Text")
-			rotation: 180
-			font.pixelSize: 15
-		}
-
-		Text {
-		  id: errorVal
-		  x: 890
-		  y: 417
-		  text: qsTr("Text")
-		  rotation: 180
-		  font.pixelSize: 15
-		}
+                ctx2.arc(posX,PosYVal , 10, 0, 2*Math.PI)
+                ctx.moveTo(posX,pointValue[i])
+                posX = posX+AddPosX;
+            }
+            ctx2.closePath()
+            ctx2.fill()
 
 
-		Text {
-			id: lt1
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt2
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt3
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt4
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt5
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt6
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt7
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt8
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt9
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt10
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt11
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt12
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt13
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt14
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
-		Text {
-			id: lt15
-			x: 931
-			y: 435
-			rotation: 180
-			font.pixelSize: 20
-		}
 
 
-		Text {
-			id: tt1
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt2
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt3
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt4
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt5
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt6
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt7
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt8
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt9
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt10
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt11
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt12
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt13
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt14
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-		Text {
-			id: tt15
-			x: 931
-			y: 35
-			rotation: 180
-			font.pixelSize: 13
-		}
-	}
+            // begin a new path to draw
+            ctx.beginPath()
+            ctx.strokeStyle = "rgb(68,119,114)"
+            ctx2.fillStyle = "rgb(68,119,114)"
 
-	Canvas {
-		id: line1
-		y: 600-120
-		// canvas size
-		width: 1024; height: 20
-		scale: 1
-		onPaint: {
-			// get context to draw with
-			var ctx = getContext("2d")
-			ctx.strokeStyle = "yellow"
-			ctx.lineWidth = 4
-			ctx.lineCap = "round"
-			ctx.lineJoin = "round"
-			ctx.setLineDash( [ 1, 4 ] )
+            posX = 164;
+            if(pointValue2[0] < errorHeight) ctx.moveTo(posX,minPosY);
+            else if(pointValue2[0] < warningHeight) ctx.moveTo(posX,middlePosY);
+            else ctx.moveTo(posX,middlePosY-(Height*((pointValue2[0]-warningHeight)/(maxHeight-warningHeight))));
 
-			ctx.beginPath()
-			ctx.moveTo(0, 0)
-			ctx.lineTo(1024, 0)
-			ctx.stroke()
-		}
-		MouseArea {
-			id: mouseArea1
-			anchors.fill: parent
-			drag.target: parent
-			drag.axis: "YAxis"
-			drag.minimumY: 0
-			drag.maximumY: 600
-			drag.filterChildren: true
+            for(var i=0;i<7;i++)
+            {
+                if(pointValue2[i] < errorHeight) ctx.lineTo(posX,minPosY);
+                else if(pointValue2[i] < warningHeight) ctx.lineTo(posX,middlePosY);
+                else ctx.lineTo(posX,middlePosY-(Height*((pointValue2[i]-warningHeight)/(maxHeight-warningHeight))));
+                posX = posX+AddPosX;
+            }
+            ctx.stroke()
 
-			//onMouseYChanged: {
-			//	line1.y = 300
-			//}
-			onReleased: {
-				warningVal.text = qsTr(((600-parent.y)/6).toFixed(0));//qsTr("angnaiS")
-				line1.y = 600-120
-			}
-		}
-	}
+            ctx2.beginPath()
+            posX = 164;
+            for(var i=0;i<7;i++)
+            {
+                if(pointValue2[i] < errorHeight) PosYVal = minPosY;
+                else if(pointValue2[i] < warningHeight) PosYVal = middlePosY;
+                else PosYVal = middlePosY-(Height*((pointValue2[i]-warningHeight)/(maxHeight-warningHeight)));
 
-	Canvas {
-		id: line2
-		y: 600-80
-		width: 1024; height: 20
-		scale: 1
-		onPaint: {
-			// get context to draw with
-			var ctx = getContext("2d")
-			ctx.strokeStyle = "red"
-			ctx.lineWidth = 4
-			ctx.lineCap = "round"
-			ctx.lineJoin = "round"
-			ctx.setLineDash( [ 1, 4 ] )
+                ctx2.arc(posX,PosYVal , 10, 0, 2*Math.PI)
+                ctx.moveTo(posX,pointValue2[i])
+                posX = posX+AddPosX;
+            }
+            ctx2.closePath()
+            ctx2.fill()
 
-			ctx.beginPath()
-			ctx.moveTo(0, 0)
-			ctx.lineTo(1024, 0)
-			ctx.stroke()
-		}
-		MouseArea {
-			id: mouseArea2
-			anchors.fill: parent
-			drag.target: parent
-			drag.axis: "YAxis"
-			drag.minimumY: 0
-			drag.maximumY: 600
-			drag.filterChildren: true
 
-			//onMouseYChanged: {
-			//	line1.y = 300
-			//}
-			onReleased: {
-				errorVal.text = qsTr(((600-parent.y)/6).toFixed(0));//qsTr("angnaiS")
-				line2.y = 600-80
-			}
-		}
-	}
+
+
+            // begin a new path to draw
+            ctx.beginPath()
+            ctx.strokeStyle = "rgb(46,74,72)"
+            ctx2.fillStyle = "rgb(46,74,72)"
+
+            posX = 164;
+            if(pointValue3[0] < errorHeight) ctx.moveTo(posX,minPosY);
+            else if(pointValue3[0] < warningHeight) ctx.moveTo(posX,middlePosY);
+            else ctx.moveTo(posX,middlePosY-(Height*((pointValue3[0]-warningHeight)/(maxHeight-warningHeight))));
+
+            for(var i=0;i<7;i++)
+            {
+                if(pointValue3[i] < errorHeight) ctx.lineTo(posX,minPosY);
+                else if(pointValue3[i] < warningHeight) ctx.lineTo(posX,middlePosY);
+                else ctx.lineTo(posX,middlePosY-(Height*((pointValue3[i]-warningHeight)/(maxHeight-warningHeight))));
+                posX = posX+AddPosX;
+            }
+            ctx.stroke()
+
+            ctx2.beginPath()
+            posX = 164;
+            for(var i=0;i<7;i++)
+            {
+                if(pointValue3[i] < errorHeight) PosYVal = minPosY;
+                else if(pointValue3[i] < warningHeight) PosYVal = middlePosY;
+                else PosYVal = middlePosY-(Height*((pointValue3[i]-warningHeight)/(maxHeight-warningHeight)));
+
+                ctx2.arc(posX,PosYVal , 10, 0, 2*Math.PI)
+                ctx.moveTo(posX,pointValue3[i])
+                posX = posX+AddPosX;
+            }
+            ctx2.closePath()
+            ctx2.fill()
+        }
+
+    }
+
+
+    Button {
+        id: bt1
+        x: 778
+        y: 160
+        width: 208
+        height: 88
+        background: Image
+        {
+            source: "../image/선택일_장착일_right.png"
+        }
+
+        Text {
+            id: lb_bt1
+            font.family:"Roboto"
+            color:"#425c59"
+            text: qsTr("2020/07/08 07:12")
+            anchors.centerIn: parent
+            font.pixelSize: 18
+        }
+
+        onClicked: {
+            console.log("onClicked!!! mbImageClicked == true")
+        }
+    }
+
+    Button {
+        id: bt2
+        x: 778
+        y: 248
+        width: 208
+        height: 88
+        background: Image
+        {
+            source: "../image/선택일_장착일_right.png"
+        }
+
+        Text {
+            id: lb_bt2
+            font.family:"Roboto"
+            color:"#425c59"
+            text: qsTr("2020/07/08 07:12")
+            anchors.centerIn: parent
+            font.pixelSize: 18
+        }
+
+        onClicked: {
+            console.log("onClicked!!! mbImageClicked == true")
+            img1.text = "bt2"
+        }
+    }
+
+    Button {
+        id: bt3
+        x: 690
+        y: 456
+        width: 316
+        height: 104
+        background: Image
+        {
+            //anchors.verticalCenter: parent.verticalCenter
+            //anchors.horizontalCenter: parent.horizontalCenter
+            source: mbImageClicked ? "../image/연결하기.png" : "../image/모니터링.png";
+        }
+
+        onClicked: {
+            console.log("onClicked!!! mbImageClicked == true")
+            if(mbImageClicked) mbImageClicked = false
+            else mbImageClicked = true
+        }
+    }
+
+    Image {
+        id: img1
+        x: 778
+        y: 336
+        width: 208
+        height: 104
+        source: "../image/두께감소치.png"
+
+        Text {
+            id: lb_img1
+            font.family:"Roboto"
+            color:"#425c59"
+            text: qsTr("\n\n2.5 mm 3.5 mm 5.2 mm")
+            anchors.centerIn: parent
+            font.pixelSize: 15
+        }
+    }
+
+    Image {
+        id: img2
+        x: 690
+        y: 160
+        width: 97
+        height: 88
+        source: "../image/선택일.png"
+    }
+
+    Image {
+        id: img3
+        x: 690
+        y: 248
+        width: 97
+        height: 88
+        source: "../image/장착일.png"
+    }
+
+    Image {
+        id: img4
+        x: 690
+        y: 336
+        width: 97
+        height: 104
+        source: "../image/사용일.png"
+    }
+
+    Image {
+        id: img5
+        x: 690
+        y: 60
+        width: 296
+        height: 104
+        source: "../image/로고_원본.png"
+    }
+
+    Image {
+        id: img12
+        x: 690
+        y: 60
+        width: 32
+        height: 20
+        source: "../image/point.png"
+    }
+
+
+    Image {
+        id: img7
+        x: 154
+        y: 50
+        width: 168
+        height: 104
+        source: "../image/p1.png"
+        Text {
+            id: lb_img7
+            font.family:"Roboto"
+            color:"white"
+            text: "\n%1mm".arg((pointValue[pointVar-1]/100).toFixed(2))
+            anchors.centerIn: parent
+
+            font.pixelSize: 20
+        }
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                exitCnt++;
+                if(exitCnt>10){
+                    Qt.callLater(Qt.quit);
+                }
+            }
+        }
+
+    }
+    Image {
+        id: img8
+        x: 321
+        y: 50
+        width: 168
+        height: 104
+        source: "../image/p2.png"
+        Text {
+            id: lb_img8
+            text: "\n%1mm".arg((pointValue2[pointVar-1]/100).toFixed(2))
+            font.family:"Roboto"
+            color:"white"
+            anchors.centerIn: parent
+
+            font.pixelSize: 20
+        }
+
+    }
+    Image {
+        id: img9
+        x: 488
+        y: 50
+        width: 168
+        height: 104
+        source: "../image/p3.png"
+        Text {
+            id: lb_img9
+            text: "\n%1mm".arg((pointValue3[pointVar-1]/100).toFixed(2))
+            font.family:"Roboto"
+            color:"white"
+            anchors.centerIn: parent
+
+            font.pixelSize: 20
+        }
+
+    }
+    Image {
+        id: img10
+        x: 50
+        y: 150
+        width: 606
+        height: 64
+        source: "../image/경고까지.png"
+    }
+    Image {
+        id: img11
+        x: 50
+        y: 198
+        width: 606
+        height: 64
+        source: "../image/위험까지.png"
+    }
+
+    Text {
+        id: lb_img10_1
+        text: "\n%1 mm".arg((warningHeight/100).toFixed(2))
+        x:200
+        y:143
+        font.family:"Roboto"
+        color:"white"
+
+        font.pixelSize: 19
+    }
+    Text {
+        id: lb_img10_2
+        text: "\n%1 mm".arg((warningHeight/100).toFixed(2))
+        x:367
+        y:143
+        font.family:"Roboto"
+        color:"white"
+        font.pixelSize: 19
+    }
+    Text {
+        id: lb_img10_3
+        text: "\n%1 mm".arg((warningHeight/100).toFixed(2))
+        x:534
+        y:143
+        font.family:"Roboto"
+        color:"white"
+
+        font.pixelSize: 19
+    }
+
+
+    Text {
+        id: lb_img11_1
+        text: "\n%1 mm".arg((errorHeight/100).toFixed(2))
+        x:200
+        y:192
+        font.family:"Roboto"
+        color:"white"
+
+        font.pixelSize: 19
+    }
+    Text {
+        id: lb_img11_2
+        text: "\n%1 mm".arg((errorHeight/100).toFixed(2))
+        x:367
+        y:192
+        font.family:"Roboto"
+        color:"white"
+
+        font.pixelSize: 19
+    }
+    Text {
+        id: lb_img11_3
+        text: "\n%1 mm".arg((errorHeight/100).toFixed(2))
+        x:534
+        y:192
+        font.family:"Roboto"
+        color:"white"
+
+        font.pixelSize: 19
+    }
+    Text {
+        id: lb_img6_1
+        x: 80+35
+        y: 181+244
+        font.family:"Roboto"
+        color:"#FCD467"
+        font.pixelSize: 16
+        text: "\n%1".arg((warningHeight/100).toFixed(2))
+    }
+    Text {
+        id: lb_img6_2
+        x: 80+35
+        y: 207+244
+        font.family:"Roboto"
+        color:"#E26F5C"
+        font.pixelSize: 16
+        text: "\n%1".arg((errorHeight/100).toFixed(2))
+    }
+
 }
 
 /*##^##
 Designer {
-	D{i:1;anchors_height:600;anchors_width:1024}
+    D{i:1;anchors_height:600;anchors_width:1024}
 }
 ##^##*/

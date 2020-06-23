@@ -16,7 +16,7 @@ void ConnectEvent::cppSignaltoQmlSlot()
 	slotTimerAlarm();
 	timer = new QTimer();
 	connect(timer, SIGNAL(timeout()), this, SLOT(slotTimerAlarm()));
-    timer->start(500);
+    timer->start(300);
 
 	exeC = false;
 }
