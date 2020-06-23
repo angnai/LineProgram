@@ -10,16 +10,16 @@
         <file>../image/p2.png</file>
         <file>../image/p3.png</file>
         <file>../image/point.png</file>
-        <file>../image/경고까지.png</file>
-        <file>../image/두께감소치.png</file>
-        <file>../image/로고_그린.png</file>
-        <file>../image/로고_원본.png</file>
-        <file>../image/모니터링.png</file>
-        <file>../image/사용일.png</file>
-        <file>../image/선택일.png</file>
-        <file>../image/선택일_장착일_right.png</file>
-        <file>../image/연결하기.png</file>
-        <file>../image/위험까지.png</file>
-        <file>../image/장착일.png</file>
+        <file>../image/h1.png</file>
+        <file>../image/h2.png</file>
+        <file>../image/h3.png</file>
+        <file>../image/h4.png</file>
+        <file>../image/h5.png</file>
+        <file>../image/h6.png</file>
+        <file>../image/h7.png</file>
+        <file>../image/h8.png</file>
+        <file>../image/h9.png</file>
+        <file>../image/h10.png</file>
+        <file>../image/h11.png</file>
     </qresource>
 </RCC>

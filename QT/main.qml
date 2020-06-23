@@ -254,7 +254,7 @@ Window {
         height: 88
         background: Image
         {
-            source: "../image/선택일_장착일_right.png"
+            source: "../image/h8.png"
         }
 
         Text {
@@ -279,7 +279,7 @@ Window {
         height: 88
         background: Image
         {
-            source: "../image/선택일_장착일_right.png"
+            source: "../image/h8.png"
         }
 
         Text {
@@ -307,7 +307,7 @@ Window {
         {
             //anchors.verticalCenter: parent.verticalCenter
             //anchors.horizontalCenter: parent.horizontalCenter
-            source: mbImageClicked ? "../image/연결하기.png" : "../image/모니터링.png";
+            source: mbImageClicked ? "../image/h9.png" : "../image/h5.png";
         }
 
         onClicked: {
@@ -323,7 +323,7 @@ Window {
         y: 336
         width: 208
         height: 104
-        source: "../image/두께감소치.png"
+        source: "../image/h2.png"
 
         Text {
             id: lb_img1
@@ -341,7 +341,7 @@ Window {
         y: 160
         width: 97
         height: 88
-        source: "../image/선택일.png"
+        source: "../image/h7.png"
     }
 
     Image {
@@ -350,7 +350,7 @@ Window {
         y: 248
         width: 97
         height: 88
-        source: "../image/장착일.png"
+        source: "../image/h11.png"
     }
 
     Image {
@@ -359,7 +359,7 @@ Window {
         y: 336
         width: 97
         height: 104
-        source: "../image/사용일.png"
+        source: "../image/h6.png"
     }
 
     Image {
@@ -368,7 +368,7 @@ Window {
         y: 60
         width: 296
         height: 104
-        source: "../image/로고_원본.png"
+        source: "../image/h4.png"
     }
 
     Image {
@@ -451,7 +451,7 @@ Window {
         y: 150
         width: 606
         height: 64
-        source: "../image/경고까지.png"
+        source: "../image/h1.png"
     }
     Image {
         id: img11
@@ -459,7 +459,7 @@ Window {
         y: 198
         width: 606
         height: 64
-        source: "../image/위험까지.png"
+        source: "../image/h10.png"
     }
 
     Text {
