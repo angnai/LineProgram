@@ -105,7 +105,7 @@ def data_read():
 	
 	result = cur.fetchall()
 	result_sort = sorted(result)
-	print("count=",num)
+	#print("count=",num)
 	trans_str = ("{}\r\n".format(num))
 	for v in result_sort:
 		trans_str += ("{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4]))
