@@ -1,11 +1,11 @@
-import sys
-import serial
-import time
-import signal
-import threading
-import pymysql
-import datetime
-import subprocess
+import sys 
+import serial 
+import time 
+import signal 
+import threading 
+import pymysql 
+import datetime 
+import subprocess 
 import re
 
  
@@ -85,6 +85,7 @@ def UpdateDBData():
 
 	timeout_enable_flag = False
 	TimeoutCnt = MaximumTimeout
+	print("input finish")
 
 
 #데이터 처리할 함수
@@ -105,6 +106,7 @@ def parsing_data(data):
 	nOp = data[2]
 
 	sedD = []
+	#print(data)
 
 	if nOp == bytes({0x30}):
 		nT = int.from_bytes(data[3],'big',signed=False)
