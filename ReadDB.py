@@ -49,7 +49,13 @@ def binder(client_socket, addr):
 				client_socket.sendall(length.to_bytes(4, byteorder="little"));
 				client_socket.sendall(trans_str.encode());
 				# print('read scan3 success')
-
+			elif msg == 'scan4':
+				trans_str = data_read_all()
+				
+				length = len(trans_str);
+				client_socket.sendall(length.to_bytes(4, byteorder="little"));
+				client_socket.sendall(trans_str.encode());
+				# print('read scan4 success')
 			else:
 				continue
 	except:
@@ -101,6 +107,20 @@ def data_search(data):
 
 def data_read():
 	sql="select * from data order by indexA desc limit 7"
+	num = cur.execute(sql)
+	
+	result = cur.fetchall()
+	result_sort = sorted(result)
+	#print("count=",num)
+	trans_str = ("{}\r\n".format(num))
+	for v in result_sort:
+		trans_str += ("{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4]))
+
+	conn.commit()
+	return trans_str
+
+def data_read_all():
+	sql="select * from data order by indexA desc"
 	num = cur.execute(sql)
 	
 	result = cur.fetchall()

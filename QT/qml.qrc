@@ -21,5 +21,6 @@
         <file>../image/h9.png</file>
         <file>../image/h10.png</file>
         <file>../image/h11.png</file>
+        <file>setting.qml</file>
     </qresource>
 </RCC>
