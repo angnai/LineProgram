@@ -3,7 +3,7 @@
 ConnectEvent::ConnectEvent()
 {
 	cout<<"angnai!!!";
-	qmlRegisterType<ConnectEvent>("ConnectEvent", 1, 0, "ConnectEvent");//class¸¦ qml¿¡¼­ »ç¿ëÇÏ±â À§ÇØ¼­ µî·ÏÇØÁÖ´Â ºÎºÐ
+	qmlRegisterType<ConnectEvent>("ConnectEvent", 1, 0, "ConnectEvent");//classï¿½ï¿½ qmlï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Îºï¿½
 
 }
 
@@ -15,7 +15,7 @@ ConnectEvent::~ConnectEvent()
 
 void ConnectEvent::cppSignaltoQmlSlot()
 {
-	QObject::connect(this, SIGNAL(cppSignaltestData(QVariant)), mMainView, SLOT(qmlSlotTestData(QVariant)));//½Ã±×³Î°ú ½½·ÔÀ» ¿¬°áÇØÁÖ´Â connection
+	QObject::connect(this, SIGNAL(cppSignaltestData(QVariant)), mMainView, SLOT(qmlSlotTestData(QVariant)));//ï¿½Ã±×³Î°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ connection
 	slotTimerAlarm();
 	timer = new QTimer();
 	connect(timer, SIGNAL(timeout()), this, SLOT(slotTimerAlarm()));
@@ -26,9 +26,9 @@ void ConnectEvent::cppSignaltoQmlSlot()
 
 void ConnectEvent::setWindow(QQuickWindow* Window)
 {
-	mMainView = Window;//connectionÀ» ÇØÁÖ±â À§ÇØ À©µµ¿ì¸¦ µî·Ï
+	mMainView = Window;//connectionï¿½ï¿½ ï¿½ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ì¸¦ ï¿½ï¿½ï¿½
 #ifdef ONLINE_DEF
-	cppSignaltoQmlSlot();//À©µµ¿ì µî·Ï°ú µ¿½Ã¿¡ connection µî·Ï
+	cppSignaltoQmlSlot();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½Ã¿ï¿½ connection ï¿½ï¿½ï¿½
 #endif
 }
 
@@ -40,7 +40,7 @@ void ConnectEvent::qmlTestDataAll(void)
 
 
 	QTcpSocket socket;
-	socket.connectToHost("127.0.0.1", 9999);
+	socket.connectToHost("127.0.0.1", 9996);
 
 
 	if (!socket.waitForConnected(10*1000)) {
