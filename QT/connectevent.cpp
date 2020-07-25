@@ -40,7 +40,7 @@ void ConnectEvent::qmlTestDataAll(void)
 
 
 	QTcpSocket socket;
-	socket.connectToHost("127.0.0.1", 9996);
+	socket.connectToHost("127.0.0.1", 9999);
 
 
 	if (!socket.waitForConnected(10*1000)) {
