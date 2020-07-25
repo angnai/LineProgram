@@ -50,13 +50,13 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../QT/connectevent.cpp \
+SOURCES       = ../QT/ConnectEvent.cpp \
 		../QT/main.cpp qrc_qml.cpp \
-		moc_connectevent.cpp
-OBJECTS       = connectevent.o \
+		moc_ConnectEvent.cpp
+OBJECTS       = ConnectEvent.o \
 		main.o \
 		qrc_qml.o \
-		moc_connectevent.o
+		moc_ConnectEvent.o
 DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/common/unix.conf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/common/linux.conf \
@@ -68,12 +68,10 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/qconfig.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_charts.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_concurrent.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_concurrent_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_core.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_core_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_datavisualization.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_dbus.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_dbus_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
@@ -84,15 +82,15 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_eventdispatcher_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_fb_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_fontdatabase_support_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_gamepad.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_gui.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_gui_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_input_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_kms_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
+		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_multimedia.pri \
+		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_network_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_networkauth.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_openglextensions.pri \
@@ -103,33 +101,23 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_qml.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_qmltest.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_quick.pri \
+		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_quickcontrols2.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_quickwidgets.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_sensors.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_serialbus.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_serialbus_private.pri \
+		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_script.pri \
+		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_scripttools.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_serialport.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_service_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_sql.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_sql_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_svg.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_testlib.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_testlib_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_texttospeech.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_theme_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_vulkan_support_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_waylandclient.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_waylandcompositor.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_webchannel.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_webkit.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_websockets.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_widgets_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_x11extras.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xml_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xmlpatterns.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/qt_functions.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++/qmake.conf \
@@ -152,7 +140,7 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/lex.prf \
-		../QT/Line_Program.pro ../QT/connectevent.h ../QT/connectevent.cpp \
+		../QT/Line_Program.pro ../QT/ConnectEvent.h ../QT/ConnectEvent.cpp \
 		../QT/main.cpp
 QMAKE_TARGET  = Line_Program
 DESTDIR       = 
@@ -176,12 +164,10 @@ Makefile: ../QT/Line_Program.pro /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/qconfig.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_charts.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_concurrent.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_concurrent_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_core.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_core_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_datavisualization.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_dbus.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_dbus_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
@@ -192,15 +178,15 @@ Makefile: ../QT/Line_Program.pro /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_eventdispatcher_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_fb_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_fontdatabase_support_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_gamepad.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_gui.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_gui_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_input_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_kms_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
+		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_multimedia.pri \
+		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_network_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_networkauth.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_openglextensions.pri \
@@ -211,33 +197,23 @@ Makefile: ../QT/Line_Program.pro /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_qml.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_qmltest.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_quick.pri \
+		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_quickcontrols2.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_quickwidgets.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_sensors.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_serialbus.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_serialbus_private.pri \
+		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_script.pri \
+		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_scripttools.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_serialport.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_service_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_sql.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_sql_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_svg.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_testlib.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_testlib_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_texttospeech.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_theme_support_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_vulkan_support_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_waylandclient.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_waylandcompositor.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_webchannel.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_webkit.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_websockets.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_widgets_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_x11extras.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xml_private.pri \
-		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xmlpatterns.pri \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/qt_functions.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++/qmake.conf \
@@ -279,12 +255,10 @@ Makefile: ../QT/Line_Program.pro /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/qconfig.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_charts.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_concurrent.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_concurrent_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_core.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_core_private.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_datavisualization.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_dbus.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_dbus_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_devicediscovery_support_private.pri:
@@ -295,15 +269,15 @@ Makefile: ../QT/Line_Program.pro /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_eventdispatcher_support_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_fb_support_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_fontdatabase_support_private.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_gamepad.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_gui.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_gui_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_input_support_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_kms_support_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri:
+/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_multimedia.pri:
+/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_network.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_network_private.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_networkauth.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_opengl.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_opengl_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_openglextensions.pri:
@@ -314,33 +288,23 @@ Makefile: ../QT/Line_Program.pro /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_qml.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_qmltest.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_quick.pri:
+/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_quickcontrols2.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_quickwidgets.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_sensors.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_serialbus.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_serialbus_private.pri:
+/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_script.pri:
+/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_scripttools.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_serialport.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_service_support_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_sql.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_sql_private.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_svg.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_testlib.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_testlib_private.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_texttospeech.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_theme_support_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_vulkan_support_private.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_waylandclient.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_waylandcompositor.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_webchannel.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_webkit.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_websockets.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_widgets.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_widgets_private.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_x11extras.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xml.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xml_private.pri:
-/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/modules/qt_lib_xmlpatterns.pri:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/qt_functions.prf:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++/qmake.conf:
@@ -386,8 +350,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../QT/qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QT/connectevent.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../QT/connectevent.cpp ../QT/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QT/ConnectEvent.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QT/ConnectEvent.cpp ../QT/main.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -416,6 +380,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qml.cpp
 qrc_qml.cpp: ../QT/qml.qrc \
 		/usr/lib/qt5/bin/rcc \
+		../QT/setting.qml \
 		../QT/main.qml \
 		../image/h7.png \
 		../image/h8.png \
@@ -445,13 +410,13 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_connectevent.cpp
+compiler_moc_header_make_all: moc_ConnectEvent.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_connectevent.cpp
-moc_connectevent.cpp: ../QT/connectevent.h \
+	-$(DEL_FILE) moc_ConnectEvent.cpp
+moc_ConnectEvent.cpp: ../QT/ConnectEvent.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/LineProgram/build-Line_Program-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/LineProgram/QT -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtQuick -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtQml -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../QT/connectevent.h -o moc_connectevent.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/pi/LineProgram/build-Line_Program-Desktop-Debug/moc_predefs.h -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/LineProgram/QT -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtQuick -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtQml -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include ../QT/ConnectEvent.h -o moc_ConnectEvent.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -467,17 +432,17 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-connectevent.o: ../QT/connectevent.cpp ../QT/connectevent.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o connectevent.o ../QT/connectevent.cpp
+ConnectEvent.o: ../QT/ConnectEvent.cpp ../QT/ConnectEvent.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ConnectEvent.o ../QT/ConnectEvent.cpp
 
-main.o: ../QT/main.cpp ../QT/connectevent.h
+main.o: ../QT/main.cpp ../QT/ConnectEvent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../QT/main.cpp
 
 qrc_qml.o: qrc_qml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml.o qrc_qml.cpp
 
-moc_connectevent.o: moc_connectevent.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_connectevent.o moc_connectevent.cpp
+moc_ConnectEvent.o: moc_ConnectEvent.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ConnectEvent.o moc_ConnectEvent.cpp
 
 ####### Install
 

@@ -2,7 +2,7 @@
 
 ConnectEvent::ConnectEvent()
 {
-	cout<<"angnai!!!";
+    qDebug() <<"angnai!!!";
 	qmlRegisterType<ConnectEvent>("ConnectEvent", 1, 0, "ConnectEvent");//class�� qml���� ����ϱ� ���ؼ� ������ִ� �κ�
 
 }
@@ -35,9 +35,6 @@ void ConnectEvent::setWindow(QQuickWindow* Window)
 void ConnectEvent::qmlTestDataAll(void)
 {
 #ifdef ONLINE_DEF
-	timer->stop();
-
-
 
 	QTcpSocket socket;
 	socket.connectToHost("127.0.0.1", 9999);
@@ -87,9 +84,8 @@ void ConnectEvent::qmlTestDataAll(void)
 	//qDebug() << "recv : " << QString::fromUtf8(s_data);
 
 
-	timer->start(300);
-
 	val1122 = s_data;
+    qDebug() <<"end11";
 #else
 	val1122 = "2\r\n2020-07-18 16:52:47\t222\t0\t0\t97\r\n2020-07-18 16:53:47\t444\t111\t222\t983";
 #endif

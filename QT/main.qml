@@ -41,7 +41,8 @@ Window {
 
 	property var strArrayScanData;
 	property var getDataCountAll: 1;
-	property var indexCnt: 1;
+    property var indexCnt: 1;
+    property var indexCnt1: 1;
 
 	property var start1stval: 0;
 	property var start2ndval: 0;
@@ -302,7 +303,7 @@ Window {
 				id: lb_bt1
 				font.family:"Roboto"
 				color:"#425c59"
-				text: qsTr("2020/07/08 07:12")
+                text: qsTr("-")
 				anchors.centerIn: parent
 				font.pixelSize: 18
 			}
@@ -327,7 +328,7 @@ Window {
 				id: lb_bt2
 				font.family:"Roboto"
 				color:"#425c59"
-				text: qsTr("2020/07/08 07:12")
+                text: qsTr("-")
 				anchors.centerIn: parent
 				font.pixelSize: 18
 			}
@@ -370,9 +371,9 @@ Window {
 				id: lb_img1
 				font.family:"Roboto"
 				color:"#425c59"
-				text: qsTr("\n\n2.5 mm 3.5 mm 5.2 mm")
+                text: qsTr("\n\n mm   mm   mm")
 				anchors.centerIn: parent
-				font.pixelSize: 15
+                font.pixelSize: 13
 			}
 		}
 
@@ -951,7 +952,7 @@ Window {
 			height: 81
 			text:"-"
 			horizontalAlignment: Text.AlignLeft
-			font.pointSize: 50
+            font.pointSize: 40
 			font.family:"Roboto"
 
 		}
@@ -1004,6 +1005,8 @@ Window {
 						sel2ndval = parseInt(valTextT2.text)
 						sel3rdval = parseInt(valTextT3.text)
 
+
+                        lb_img1.text = "\r\n" + parseFloat((start1stval-sel1stval)/100).toFixed(2) + "mm " + parseFloat((start2ndval-sel2ndval)/100).toFixed(2) + "mm " + parseFloat((start3rdval-sel3rdval)/100).toFixed(2) + "mm";
 						console.log("sel ="+sel1stval)
 						console.log("sel ="+sel2ndval)
 						console.log("sel ="+sel3rdval)
@@ -1058,9 +1061,16 @@ Window {
 			onClicked: {
 				if(list112.text == "-")return
 
-				if((indexCnt+1) <= getDataCountAll) indexCnt = indexCnt + 1
+                var strsplit;
+                if(selectWindow == 0){
+                    if((indexCnt+1) <= getDataCountAll) indexCnt = indexCnt + 1
+                    strsplit=strArrayScanData[indexCnt].toString().split("\t");
+                }
+                else{
+                    if((indexCnt1+1) <= getDataCountAll) indexCnt1 = indexCnt1 + 1
+                    strsplit=strArrayScanData[indexCnt1].toString().split("\t");
+                }
 
-				var strsplit=strArrayScanData[indexCnt].toString().split("\t");
 				list112.text = strsplit[0];
 				list113.text = parseFloat(parseInt(strsplit[1])/100).toFixed(2) + "mm / " + parseFloat(parseInt(strsplit[2])/100).toFixed(2) + "mm / " + parseFloat(parseInt(strsplit[3])/100).toFixed(2) + "mm"
 
@@ -1078,10 +1088,18 @@ Window {
 			text: qsTr("DOWN")
 			onClicked: {
 				if(list112.text == "-")return
+                var strsplit
+                if(selectWindow == 0){
+                    if((indexCnt-1) > 0) indexCnt = indexCnt -1
+                    strsplit=strArrayScanData[indexCnt].toString().split("\t");
+                }
+                else{
+                    if((indexCnt1-1) > 0) indexCnt1 = indexCnt1 -1
+                    strsplit=strArrayScanData[indexCnt1].toString().split("\t");
 
-				if((indexCnt-1) > 0) indexCnt = indexCnt -1
+                }
 
-				var strsplit=strArrayScanData[indexCnt].toString().split("\t");
+
 				list112.text = strsplit[0];
 				list113.text = parseFloat(parseInt(strsplit[1])/100).toFixed(2) + "mm / " + parseFloat(parseInt(strsplit[2])/100).toFixed(2) + "mm / " + parseFloat(parseInt(strsplit[3])/100).toFixed(2) + "mm"
 
@@ -1109,9 +1127,17 @@ Window {
 				if(strArrayScanData == "") return
 
 				getDataCountAll = parseInt(strArrayScanData[0]);
-				if(getDataCountAll < indexCnt) indexCnt = getDataCountAll;
+                var strsplit;
+                if(selectWindow == 0){
+                    if(getDataCountAll < indexCnt) indexCnt = getDataCountAll;
+                    strsplit=strArrayScanData[indexCnt].toString().split("\t");
+                }
+                else{
+                    if(getDataCountAll < indexCnt1) indexCnt1 = getDataCountAll;
+                    strsplit=strArrayScanData[indexCnt1].toString().split("\t");
+                }
 
-				var strsplit=strArrayScanData[indexCnt].toString().split("\t");
+
 				list112.text = strsplit[0];
 				list113.text = parseFloat(parseInt(strsplit[1])/100).toFixed(2) + "mm / " + parseFloat(parseInt(strsplit[2])/100).toFixed(2) + "mm / " + parseFloat(parseInt(strsplit[3])/100).toFixed(2) + "mm"
 
