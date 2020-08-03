@@ -12,7 +12,7 @@ Window {
     x: 0
     y: 0
     title: qsTr("Hello World")
-    visibility: "Maximized"    // does not hide the windows taskbar
+    //visibility: "Maximized"    // does not hide the windows taskbar
     //visibility: "FullScreen" // does     hide the windows taskbar
     flags: Qt.FramelessWindowHint|Qt.Window // frameless, but with an icon on the windows taskbar
 
@@ -54,6 +54,15 @@ Window {
 
 	property var selectWindow: 0;
 
+    property var prevX: 0;
+    property var prevY: 0;
+
+    property var touchedMoveDir: 0;
+    property var touchedMoveCnt: 0;
+    property var isTouchProcess: 0;
+    property var touchedIndex: 0;
+    property var proccedIndex: 0;
+
 	ConnectEvent {
 		id:connectEvent
 	}
@@ -61,6 +70,8 @@ Window {
     //var pointValue = new Array(20)
 
     function qmlSlotTestData(data){//slot으로 등록한 함수
+        if(isTouchProcess) return;
+
         //console.log("qmlSlotTestData data:" + data);
         var strArray=data.toString().split("\r\n");
         if(strArray == "") return
@@ -142,6 +153,138 @@ Window {
 			x:0
 			y: 0
 			z: 0
+            MouseArea {
+                id:mousearea
+                anchors.fill: parent
+                onPressed: {
+                    prevX = mouseX ; prevY = mouseY
+                    console.log("x:" + (mouseX) + " , y:" + (mouseY));
+                    proccedIndex = 0;
+                    touchedMoveCnt = 0;
+                    //touchedIndex = indexval[pointVar-1];
+                }
+                onReleased: {
+
+                    if(touchedMoveDir == 1){
+                        if((touchedIndex - touchedMoveCnt) > 1) touchedIndex = touchedIndex - touchedMoveCnt;
+                        else touchedIndex = 1;
+                    }
+                    else if(touchedMoveDir == 2){
+                        if((touchedIndex + touchedMoveCnt) < indexval[pointVar-1]) touchedIndex = touchedIndex + touchedMoveCnt;
+                        else touchedIndex = indexval[pointVar-1];
+                    }
+                }
+
+                onPositionChanged: {
+                    if((mouseX-prevX) < 0){
+                        // Direction Left
+                        touchedMoveDir = 1;
+                        if(parseInt((prevX-mouseX)/66) > touchedMoveCnt){
+                            connectEvent.qmlSetTrans(0);
+
+                            isTouchProcess = 1;
+                            if(touchedIndex == 0){
+                                touchedIndex = indexval[pointVar-1];
+                            }
+
+                            touchedMoveCnt = parseInt((prevX-mouseX)/66);
+
+
+                        }
+                    }
+                    else{
+                        // Direction Right
+                        touchedMoveDir = 2;
+                        if(parseInt((mouseX-prevX)/66) > touchedMoveCnt){
+                            connectEvent.qmlSetTrans(0);
+
+                            isTouchProcess = 1;
+                            if(touchedIndex == 0){
+                                touchedIndex = indexval[pointVar-1];
+                            }
+
+                            touchedMoveCnt = parseInt((mouseX-prevX)/66);
+
+
+                        }
+                    }
+
+                    if(isTouchProcess){
+                        bt_currnt.visible = true
+                        if(proccedIndex != touchedMoveCnt){
+                            proccedIndex = touchedMoveCnt;
+
+
+                            var getDataStr;
+                            if(touchedMoveDir == 1){
+                                if((touchedIndex-touchedMoveCnt) < 1 ){
+                                    console.log("1Index = 1");
+                                    connectEvent.qmlIndexDataAll(1);
+
+                                }
+                                else{
+
+                                    connectEvent.qmlIndexDataAll((touchedIndex-touchedMoveCnt));
+                                    console.log("2Index = " + (touchedIndex-touchedMoveCnt));
+                                }
+                            }
+                            else if(touchedMoveDir == 2){
+                                if((touchedIndex+touchedMoveCnt) > indexval[pointVar-1]){
+                                    console.log("3Index = " + indexval[pointVar-1]);
+                                    connectEvent.qmlIndexDataAll(indexval[pointVar-1]);
+                                }
+                                else{
+
+                                    connectEvent.qmlIndexDataAll((touchedIndex+touchedMoveCnt));
+                                    console.log("4Index = " + (touchedIndex+touchedMoveCnt));
+                                }
+                            }
+
+                            getDataStr = connectEvent.qmlTestDataGet()
+                            var strArray=getDataStr.toString().split("\r\n");
+                            if(strArray == "") return
+
+                            pointVar = parseInt(strArray[0]);
+                            pointValue = new Array(7)
+                            pointValue2 = new Array(7)
+                            pointValue3 = new Array(7)
+                            tValue = new Array(7)
+
+                            for(var i=1; i<=pointVar ; i++)
+                            {
+                                var strsplit=strArray[i].toString().split("\t");
+                                //console.log(strArray[i]);
+                                tValue[i-1] = (strsplit[0]);
+                                tValue[i-1] = tValue[i-1].substring(11, 19);
+                                pointValue[i-1] = parseInt(strsplit[1]);
+                                pointValue2[i-1] = parseInt(strsplit[2]);
+                                pointValue3[i-1] = parseInt(strsplit[3]);
+                            }
+
+                            img12.x = 148 + 75*(pointVar-1);
+                            img12.y = 280-img12.height;
+
+                            //pointVar;
+
+                            lb_img6_1.text = "\n%1".arg((warningHeight/100).toFixed(2))
+                            lb_img6_2.text ="\n%1".arg((errorHeight/100).toFixed(2))
+                            lb_img7.text = "\n%1mm".arg((pointValue[pointVar-1]/100).toFixed(2))
+                            lb_img8.text = "\n%1mm".arg((pointValue2[pointVar-1]/100).toFixed(2))
+                            lb_img9.text = "\n%1mm".arg((pointValue3[pointVar-1]/100).toFixed(2))
+                            lb_img10_1.text = "\n%1 mm".arg((warningHeight/100).toFixed(2))
+                            lb_img10_2.text = "\n%1 mm".arg((warningHeight/100).toFixed(2))
+                            lb_img10_3.text = "\n%1 mm".arg((warningHeight/100).toFixed(2))
+                            lb_img11_1.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
+                            lb_img11_2.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
+                            lb_img11_3.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
+
+                            root.requestPaint()
+                        }
+                    }
+                    //root.requestPaint()
+                    //console.log("x:" + (mouseX-prevX) + " , y:" + (mouseY-prevY));
+                }
+            }
 
 			// handler to override for drawing
 			onPaint: {
@@ -287,6 +430,30 @@ Window {
 
 		}
 
+        Button {
+            id: bt_currnt
+            x: 70
+            y: 497
+            width: 136-70
+            height: 525-497
+            visible: false
+
+            Text {
+                id: lb_bt1_txt
+                font.family:"Roboto"
+                color:"#425c59"
+                text: qsTr("current")
+                anchors.centerIn: parent
+                font.pixelSize: 15
+            }
+
+            onClicked: {
+                isTouchProcess = 0;
+                touchedIndex = 0;
+                bt_currnt.visible = false;
+                connectEvent.qmlSetTrans(1);
+            }
+        }
 
 		Button {
 			id: bt1

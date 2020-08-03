@@ -11,28 +11,28 @@ using namespace std;
 class ConnectEvent : public QObject
 {
 public:
-	Q_OBJECT//솔직히 왜 추가해야하는지는 모르겠지만 추가를 안하면 connection할때 에러 난다(추후에 알아 보도록 하겠다.)
-
-	//그리고 Q_OBJECT 추가한 후 Build->Run qmake를 해주자(중요!!)
-
+    Q_OBJECT
 #define ONLINE_DEF
 public:
 	bool exeC;
+    int isTrans;
 	ConnectEvent();
 	~ConnectEvent();
 
-	void cppSignaltoQmlSlot();//cpp에서 시그널을 날리고 qml 에서 받기위해 connection을 해두는 함수
+    void cppSignaltoQmlSlot();
 	void setWindow(QQuickWindow* Window);
 	QTimer *timer;
 
 	QString val1122;
 
-	Q_INVOKABLE void qmlTestDataAll(void);
-	Q_INVOKABLE QString qmlTestDataGet(void);
+    Q_INVOKABLE void qmlTestDataAll(void);
+    Q_INVOKABLE QString qmlTestDataGet(void);
+    Q_INVOKABLE void qmlIndexDataAll(int nIndexA);
+    Q_INVOKABLE void qmlSetTrans(int nSet);
 
 private:
 	QQuickWindow* mMainView;
-signals://클래스에서  signal등록 하는 방법
+signals:
 	void cppSignaltestData(QVariant);
 public slots:
 	void slotTimerAlarm();

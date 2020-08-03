@@ -56,6 +56,14 @@ def binder(client_socket, addr):
 				client_socket.sendall(length.to_bytes(4, byteorder="little"));
 				client_socket.sendall(trans_str.encode());
 				# print('read scan4 success')
+			elif msg[0:5] == 'scan5':
+				print(msg[5:9])
+				trans_str = data_search_index(msg[5:9])
+				
+				length = len(trans_str);
+				client_socket.sendall(length.to_bytes(4, byteorder="little"));
+				client_socket.sendall(trans_str.encode());
+				# print('read scan2 success')
 			else:
 				continue
 	except:
@@ -97,6 +105,37 @@ def data_search(data):
 
 	result = result + cur.fetchall()
 	result_sort = sorted(result)
+	# print("count=",num)
+	trans_str = ("{}\r\n".format(num))
+	for v in result_sort:
+		trans_str += ("{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4]))
+	
+	conn.commit()
+	return trans_str
+
+def data_search_index(data):
+	numT = int(data)
+	sql = "SELECT * FROM data WHERE indexA BETWEEN %s and %s order by indexA LIMIT 3"
+	num = cur.execute(sql,(numT-3,numT-1))
+
+	if num < 0:
+		# print("Input range2 error")
+		return
+
+	result = cur.fetchall()
+	conn.commit()
+
+	#result = sorted(result_sort)
+
+	sql = "SELECT * FROM data WHERE indexA >= %s LIMIT 4"
+	num += cur.execute(sql,data)
+	if num < 0:
+		# print("Input range1 error")
+		return
+
+	result = result + cur.fetchall()
+	#result_sort = sorted(result)
+	result_sort = result
 	# print("count=",num)
 	trans_str = ("{}\r\n".format(num))
 	for v in result_sort:
