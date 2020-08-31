@@ -7,15 +7,16 @@ import pymysql
 from datetime import datetime
 import subprocess 
 import re
-
- 
+import os
+			
 
 line = [] #라인 단위로 데이터 가져올 리스트 변수
 BLEline = []
 
 port = '/dev/ttyUSB0' # 시리얼 포트 Zigbee
-#port = 'COM2' # 시리얼 포트
+#port = 'COM3' # 시리얼 포트
 port1 = '/dev/ttyUSB1' # 시리얼 포트 BLE 연결
+#port1 = 'COM1' # 시리얼 포트
 
 baud = 115200 # 시리얼 보드레이트(통신속도)
 
@@ -319,9 +320,14 @@ global BLEresult
 global BLEnum
 global Phonenum
 global BLEFlag
+global setTimeYMD
+global setTimeHMS
+
 BLEFlag = False
 BLEnum = 0
 Phonenum = 0
+setTimeYMD = ""
+setTimeHMS = ""
 
 #데이터 처리할 함수
 def BLEparsing_data(data):
@@ -333,6 +339,8 @@ def BLEparsing_data(data):
 	global Phonenum
 	global BLEnum
 	global BLEFlag
+	global setTimeYMD
+	global setTimeHMS
 
 	if len(data) < 3:
 		return
@@ -348,6 +356,37 @@ def BLEparsing_data(data):
 	if (((nOp == bytes({0x01})) or (nOp == bytes({0x02}))) or (nOp == bytes({0x03}))):	
 		if nOp == bytes({0x01}):
 			BLEFlag = False
+		elif nOp == bytes({0x02}):
+			
+			valueT1A = int.from_bytes(data[3],'big',signed=False) * 1000
+			valueT1A += int.from_bytes(data[4],'big',signed=False) * 100
+			valueT1A += int.from_bytes(data[5],'big',signed=False) * 10
+			valueT1A += int.from_bytes(data[6],'big',signed=False) * 1
+			
+			valueT2A = int.from_bytes(data[7],'big',signed=False) * 10
+			valueT2A += int.from_bytes(data[8],'big',signed=False) * 1
+			
+			valueT3A = int.from_bytes(data[9],'big',signed=False) * 10
+			valueT3A += int.from_bytes(data[10],'big',signed=False) * 1
+
+			setTimeYMD = ("{}-{}-{}".format(valueT1A,valueT2A,valueT3A))
+			print(setTimeYMD)
+		elif nOp == bytes({0x03}):
+			valueT1A = int.from_bytes(data[3],'big',signed=False) * 10
+			valueT1A += int.from_bytes(data[4],'big',signed=False) * 1
+			
+			valueT2A = int.from_bytes(data[5],'big',signed=False) * 10
+			valueT2A += int.from_bytes(data[6],'big',signed=False) * 1
+			
+			valueT3A = int.from_bytes(data[7],'big',signed=False) * 10
+			valueT3A += int.from_bytes(data[8],'big',signed=False) * 1
+
+			setTimeYMD = ("{} {}:{}:{}".format(setTimeYMD,valueT1A,valueT2A,valueT3A))
+			print(setTimeYMD)
+			os.system('timedatectl set-ntp 0')
+			os.system('/home/pi/LineProgram/SetTimeS.sh '+setTimeYMD)
+
+		
 
 		sedD.append(0x44)
 		sedD.append(0x00)
