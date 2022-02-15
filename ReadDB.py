@@ -181,7 +181,7 @@ if __name__ == "__main__":
 
 
 	while True:
-		conn = pymysql.connect(host="localhost", user='test', password='1234', port=3306, db='testdb', charset='utf8')
+		conn = pymysql.connect(host="localhost", user='root', password='asd123', port=3306, db='testdb', charset='utf8')
 		cur = conn.cursor()
 		
 
