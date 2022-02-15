@@ -20,6 +20,7 @@ Window {
     property var pointValue;
     property var pointValue2;
     property var pointValue3;
+    property var pointValue4;
     property var tValue;
     property var indexval;
 	property var minHeight: 0;
@@ -31,6 +32,8 @@ Window {
     property string strVmm: "{0} mm"
     property string strV: "{0}"
     property var exitCnt : 0;
+
+    property var offset_y : 100;
 
 	property var setYear;
 	property var setMonth;
@@ -80,6 +83,7 @@ Window {
         pointValue = new Array(7)
         pointValue2 = new Array(7)
         pointValue3 = new Array(7)
+        pointValue4 = new Array(7)
         indexval = new Array(7)
         tValue = new Array(7)
 
@@ -92,16 +96,20 @@ Window {
             pointValue[i-1] = parseInt(strsplit[1]);
             pointValue2[i-1] = parseInt(strsplit[2]);
             pointValue3[i-1] = parseInt(strsplit[3]);
-            indexval[i-1] = parseInt(strsplit[4]);
+            pointValue4[i-1] = parseInt(strsplit[4]);
+            indexval[i-1] = parseInt(strsplit[5]);
         }
 
         img12.x = 148 + 75*(pointVar-1);
-        img12.y = 280-img12.height;
-
-        //pointVar;
+        img12.y = 280-img12.height - offset_y;
 
         lb_img6_1.text = "\n%1".arg((warningHeight/100).toFixed(2))
         lb_img6_2.text ="\n%1".arg((errorHeight/100).toFixed(2))
+        /*
+        #if 0
+
+        //pointVar;
+
         lb_img7.text = "\n%1mm".arg((pointValue[pointVar-1]/100).toFixed(2))
         lb_img8.text = "\n%1mm".arg((pointValue2[pointVar-1]/100).toFixed(2))
         lb_img9.text = "\n%1mm".arg((pointValue3[pointVar-1]/100).toFixed(2))
@@ -111,7 +119,14 @@ Window {
         lb_img11_1.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
         lb_img11_2.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
         lb_img11_3.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
+        #endif
+        */
 
+
+        lb_val_0.text = "\n%1mm".arg((pointValue[pointVar-1]/100).toFixed(2))
+        lb_val_1.text = "\n%1mm".arg((pointValue2[pointVar-1]/100).toFixed(2))
+        lb_val_2.text = "\n%1mm".arg((pointValue3[pointVar-1]/100).toFixed(2))
+        lb_val_3.text = "\n%1mm".arg((pointValue4[pointVar-1]/100).toFixed(2))
         root.requestPaint()
     }
     /*
@@ -248,6 +263,7 @@ Window {
                             pointValue = new Array(7)
                             pointValue2 = new Array(7)
                             pointValue3 = new Array(7)
+                            pointValue4 = new Array(7)
                             tValue = new Array(7)
 
                             for(var i=1; i<=pointVar ; i++)
@@ -259,15 +275,18 @@ Window {
                                 pointValue[i-1] = parseInt(strsplit[1]);
                                 pointValue2[i-1] = parseInt(strsplit[2]);
                                 pointValue3[i-1] = parseInt(strsplit[3]);
+                                pointValue4[i-1] = parseInt(strsplit[4]);
                             }
 
                             img12.x = 148 + 75*(pointVar-1);
                             img12.y = 280-img12.height;
-
-                            //pointVar;
-
                             lb_img6_1.text = "\n%1".arg((warningHeight/100).toFixed(2))
                             lb_img6_2.text ="\n%1".arg((errorHeight/100).toFixed(2))
+
+
+                            //pointVar;
+                        /*
+                            #if 0
                             lb_img7.text = "\n%1mm".arg((pointValue[pointVar-1]/100).toFixed(2))
                             lb_img8.text = "\n%1mm".arg((pointValue2[pointVar-1]/100).toFixed(2))
                             lb_img9.text = "\n%1mm".arg((pointValue3[pointVar-1]/100).toFixed(2))
@@ -277,6 +296,12 @@ Window {
                             lb_img11_1.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
                             lb_img11_2.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
                             lb_img11_3.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
+                            #endif
+                        */
+                            lb_val_0.text = "\n%1mm".arg((pointValue[pointVar-1]/100).toFixed(2))
+                            lb_val_1.text = "\n%1mm".arg((pointValue2[pointVar-1]/100).toFixed(2))
+                            lb_val_2.text = "\n%1mm".arg((pointValue3[pointVar-1]/100).toFixed(2))
+                            lb_val_3.text = "\n%1mm".arg((pointValue4[pointVar-1]/100).toFixed(2))
 
                             root.requestPaint()
                         }
@@ -290,7 +315,7 @@ Window {
 			onPaint: {
 				// get context to draw with
 				x: 35
-				y: 244
+                y: 244
 				width: 636
 				height: 334
 
@@ -299,7 +324,7 @@ Window {
 				var ctx = getContext("2d")
 				var ctx2 = getContext("2d")
 
-				ctx.drawImage('qrc:/../image/left_box.png', 35, 244)
+                ctx.drawImage('qrc:/../image/left_box.png', 35, 244 - offset_y)
 				ctx.save()
 
 				// setup the stroke
@@ -310,8 +335,8 @@ Window {
 				var PosYVal;
 
 				AddPosX = 75
-				middlePosY = 468;
-				minPosY = 496;
+                middlePosY = 468;
+                minPosY = 496;
 				Height = (middlePosY-300);
 
 				ctx.lineWidth = 2
@@ -324,15 +349,15 @@ Window {
 				ctx2.fillStyle = "rgb(150,175,173)"
 
 				posX = 164;
-				if(pointValue[0] < errorHeight) ctx.moveTo(posX,minPosY);
-				else if(pointValue[0] < warningHeight) ctx.moveTo(posX,middlePosY);
-				else ctx.moveTo(posX,middlePosY-(Height*((pointValue[0]-warningHeight)/(maxHeight-warningHeight))));
+                if(pointValue[0] < errorHeight) ctx.moveTo(posX,minPosY - offset_y);
+                else if(pointValue[0] < warningHeight) ctx.moveTo(posX,middlePosY - offset_y);
+                else ctx.moveTo(posX,middlePosY-(Height*((pointValue[0]-warningHeight)/(maxHeight-warningHeight))) - offset_y);
 
 				for(var i=0;i<7;i++)
 				{
-					if(pointValue[i] < errorHeight) ctx.lineTo(posX,minPosY);
-					else if(pointValue[i] < warningHeight) ctx.lineTo(posX,middlePosY);
-					else ctx.lineTo(posX, middlePosY-(Height*((pointValue[i]-warningHeight)/(maxHeight-warningHeight))).toFixed(0));
+                    if(pointValue[i] < errorHeight) ctx.lineTo(posX,minPosY - offset_y);
+                    else if(pointValue[i] < warningHeight) ctx.lineTo(posX,middlePosY - offset_y);
+                    else ctx.lineTo(posX, middlePosY-(Height*((pointValue[i]-warningHeight)/(maxHeight-warningHeight))).toFixed(0) - offset_y);
 					posX = posX+AddPosX;
 					//console.log(pointValue[i],middlePosY-(Height*((pointValue[i]-warningHeight)/(maxHeight-warningHeight))).toFixed(0));
 				}
@@ -342,9 +367,9 @@ Window {
 				posX = 164;
 				for(var i=0;i<7;i++)
 				{
-					if(pointValue[i] < errorHeight) PosYVal = minPosY;
-					else if(pointValue[i] < warningHeight) PosYVal = middlePosY;
-					else PosYVal = middlePosY-(Height*((pointValue[i]-warningHeight)/(maxHeight-warningHeight)));
+                    if(pointValue[i] < errorHeight) PosYVal = minPosY - offset_y;
+                    else if(pointValue[i] < warningHeight) PosYVal = middlePosY - offset_y;
+                    else PosYVal = middlePosY-(Height*((pointValue[i]-warningHeight)/(maxHeight-warningHeight))) - offset_y;
 
 					ctx2.arc(posX,PosYVal , 10, 0, 2*Math.PI)
 					ctx.moveTo(posX,pointValue[i])
@@ -362,15 +387,15 @@ Window {
 				ctx2.fillStyle = "rgb(68,119,114)"
 
 				posX = 164;
-				if(pointValue2[0] < errorHeight) ctx.moveTo(posX,minPosY);
-				else if(pointValue2[0] < warningHeight) ctx.moveTo(posX,middlePosY);
-				else ctx.moveTo(posX,middlePosY-(Height*((pointValue2[0]-warningHeight)/(maxHeight-warningHeight))));
+                if(pointValue2[0] < errorHeight) ctx.moveTo(posX,minPosY - offset_y);
+                else if(pointValue2[0] < warningHeight) ctx.moveTo(posX,middlePosY - offset_y);
+                else ctx.moveTo(posX,middlePosY-(Height*((pointValue2[0]-warningHeight)/(maxHeight-warningHeight))) - offset_y);
 
 				for(var i=0;i<7;i++)
 				{
-					if(pointValue2[i] < errorHeight) ctx.lineTo(posX,minPosY);
-					else if(pointValue2[i] < warningHeight) ctx.lineTo(posX,middlePosY);
-					else ctx.lineTo(posX,middlePosY-(Height*((pointValue2[i]-warningHeight)/(maxHeight-warningHeight))));
+                    if(pointValue2[i] < errorHeight) ctx.lineTo(posX,minPosY - offset_y);
+                    else if(pointValue2[i] < warningHeight) ctx.lineTo(posX,middlePosY - offset_y);
+                    else ctx.lineTo(posX,middlePosY-(Height*((pointValue2[i]-warningHeight)/(maxHeight-warningHeight))) - offset_y);
 					posX = posX+AddPosX;
 				}
 				ctx.stroke()
@@ -379,57 +404,95 @@ Window {
 				posX = 164;
 				for(var i=0;i<7;i++)
 				{
-					if(pointValue2[i] < errorHeight) PosYVal = minPosY;
-					else if(pointValue2[i] < warningHeight) PosYVal = middlePosY;
-					else PosYVal = middlePosY-(Height*((pointValue2[i]-warningHeight)/(maxHeight-warningHeight)));
+                    if(pointValue2[i] < errorHeight) PosYVal = minPosY - offset_y;
+                    else if(pointValue2[i] < warningHeight) PosYVal = middlePosY - offset_y;
+                    else PosYVal = middlePosY-(Height*((pointValue2[i]-warningHeight)/(maxHeight-warningHeight))) - offset_y;
 
 					ctx2.arc(posX,PosYVal , 10, 0, 2*Math.PI)
 					ctx.moveTo(posX,pointValue2[i])
 					posX = posX+AddPosX;
 				}
 				ctx2.closePath()
-				ctx2.fill()
+                ctx2.fill()
 
 
 
 
-				// begin a new path to draw
-				ctx.beginPath()
-				ctx.strokeStyle = "rgb(46,74,72)"
-				ctx2.fillStyle = "rgb(46,74,72)"
+                // begin a new path to draw
+                ctx.beginPath()
+                ctx.strokeStyle = "rgb(46,74,72)"
+                ctx2.fillStyle = "rgb(46,74,72)"
 
-				posX = 164;
-				if(pointValue3[0] < errorHeight) ctx.moveTo(posX,minPosY);
-				else if(pointValue3[0] < warningHeight) ctx.moveTo(posX,middlePosY);
-				else ctx.moveTo(posX,middlePosY-(Height*((pointValue3[0]-warningHeight)/(maxHeight-warningHeight))));
+                posX = 164;
+                if(pointValue3[0] < errorHeight) ctx.moveTo(posX,minPosY - offset_y);
+                else if(pointValue3[0] < warningHeight) ctx.moveTo(posX,middlePosY - offset_y);
+                else ctx.moveTo(posX,middlePosY-(Height*((pointValue3[0]-warningHeight)/(maxHeight-warningHeight))) - offset_y);
 
-				for(var i=0;i<7;i++)
-				{
-					if(pointValue3[i] < errorHeight) ctx.lineTo(posX,minPosY);
-					else if(pointValue3[i] < warningHeight) ctx.lineTo(posX,middlePosY);
-					else ctx.lineTo(posX,middlePosY-(Height*((pointValue3[i]-warningHeight)/(maxHeight-warningHeight))));
-					posX = posX+AddPosX;
-				}
-				ctx.stroke()
+                for(var i=0;i<7;i++)
+                {
+                    if(pointValue3[i] < errorHeight) ctx.lineTo(posX,minPosY - offset_y);
+                    else if(pointValue3[i] < warningHeight) ctx.lineTo(posX,middlePosY - offset_y);
+                    else ctx.lineTo(posX,middlePosY-(Height*((pointValue3[i]-warningHeight)/(maxHeight-warningHeight))) - offset_y);
+                    posX = posX+AddPosX;
+                }
+                ctx.stroke()
 
-				ctx2.beginPath()
-				posX = 164;
-				for(var i=0;i<7;i++)
-				{
-					if(pointValue3[i] < errorHeight) PosYVal = minPosY;
-					else if(pointValue3[i] < warningHeight) PosYVal = middlePosY;
-					else PosYVal = middlePosY-(Height*((pointValue3[i]-warningHeight)/(maxHeight-warningHeight)));
+                ctx2.beginPath()
+                posX = 164;
+                for(var i=0;i<7;i++)
+                {
+                    if(pointValue3[i] < errorHeight) PosYVal = minPosY - offset_y;
+                    else if(pointValue3[i] < warningHeight) PosYVal = middlePosY - offset_y;
+                    else PosYVal = middlePosY-(Height*((pointValue3[i]-warningHeight)/(maxHeight-warningHeight))) - offset_y;
 
-					ctx2.arc(posX,PosYVal , 10, 0, 2*Math.PI)
-					ctx.moveTo(posX,pointValue3[i])
-					posX = posX+AddPosX;
-				}
-				ctx2.closePath()
-				ctx2.fill()
+                    ctx2.arc(posX,PosYVal , 10, 0, 2*Math.PI)
+                    ctx.moveTo(posX,pointValue3[i])
+                    posX = posX+AddPosX;
+                }
+                ctx2.closePath()
+                ctx2.fill()
+
+
+
+
+                // begin a new path to draw
+                ctx.beginPath()
+                ctx.strokeStyle = "rgb(255,255,0)"
+                ctx2.fillStyle = "rgb(255,255,0)"
+
+                posX = 164;
+                if(pointValue4[0] < errorHeight) ctx.moveTo(posX,minPosY - offset_y);
+                else if(pointValue4[0] < warningHeight) ctx.moveTo(posX,middlePosY - offset_y);
+                else ctx.moveTo(posX,middlePosY-(Height*((pointValue4[0]-warningHeight)/(maxHeight-warningHeight))) - offset_y);
+
+                for(var i=0;i<7;i++)
+                {
+                    if(pointValue4[i] < errorHeight) ctx.lineTo(posX,minPosY - offset_y);
+                    else if(pointValue4[i] < warningHeight) ctx.lineTo(posX,middlePosY - offset_y);
+                    else ctx.lineTo(posX,middlePosY-(Height*((pointValue4[i]-warningHeight)/(maxHeight-warningHeight))) - offset_y);
+                    posX = posX+AddPosX;
+                }
+                ctx.stroke()
+
+                ctx2.beginPath()
+                posX = 164;
+                for(var i=0;i<7;i++)
+                {
+                    if(pointValue4[i] < errorHeight) PosYVal = minPosY - offset_y;
+                    else if(pointValue4[i] < warningHeight) PosYVal = middlePosY - offset_y;
+                    else PosYVal = middlePosY-(Height*((pointValue4[i]-warningHeight)/(maxHeight-warningHeight))) - offset_y;
+
+                    ctx2.arc(posX,PosYVal , 10, 0, 2*Math.PI)
+                    ctx.moveTo(posX,pointValue4[i])
+                    posX = posX+AddPosX;
+                }
+                ctx2.closePath()
+                ctx2.fill()
 			}
 
 		}
-
+    /*
+        #if 0
         Button {
             id: bt_currnt
             x: 70
@@ -633,7 +696,7 @@ Window {
 			width: 32
 			height: 20
 			source: "../image/point.png"
-		}
+        }
 
 
 		Image {
@@ -777,27 +840,73 @@ Window {
 			color:"white"
 
 			font.pixelSize: 19
-		}
-		Text {
-			id: lb_img6_1
-			x: 80+35
-			y: 181+244
-			font.family:"Roboto"
-			color:"#FCD467"
-			font.pixelSize: 16
-			text: "\n%1".arg((warningHeight/100).toFixed(2))
-		}
-		Text {
-			id: lb_img6_2
-			x: 80+35
-			y: 207+244
-			font.family:"Roboto"
-			color:"#E26F5C"
-			font.pixelSize: 16
-			text: "\n%1".arg((errorHeight/100).toFixed(2))
-		}
-	}
+        }
+        #endif
+    */
 
+        Text {
+            id: lb_img6_1
+            x: 80+35
+            y: 181+244 - offset_y
+            font.family:"Roboto"
+            color:"#FCD467"
+            font.pixelSize: 16
+            text: "\n%1".arg((warningHeight/100).toFixed(2))
+        }
+        Text {
+            id: lb_img6_2
+            x: 80+35
+            y: 207+244 - offset_y
+            font.family:"Roboto"
+            color:"#E26F5C"
+            font.pixelSize: 16
+            text: "\n%1".arg((errorHeight/100).toFixed(2))
+        }
+        Image {
+            id: img12
+            x: 690
+            y: 60
+            width: 32
+            height: 20
+            source: "../image/point.png"
+        }
+        Text {
+            id: lb_val_0
+            text: "\n%1 mm".arg((pointValue[pointVar-1]/100).toFixed(2))
+            x:707
+            y:227
+            font.family:"Roboto"
+            color:"black"
+            font.pixelSize: 19
+        }
+        Text {
+            id: lb_val_1
+            text: "\n%1 mm".arg((pointValue2[pointVar-1]/100).toFixed(2))
+            x:895
+            y:227
+            font.family:"Roboto"
+            color:"black"
+            font.pixelSize: 19
+        }
+        Text {
+            id: lb_val_2
+            text: "\n%1 mm".arg((pointValue3[pointVar-1]/100).toFixed(2))
+            x:707
+            y:395
+            font.family:"Roboto"
+            color:"black"
+            font.pixelSize: 19
+        }
+        Text {
+            id: lb_val_3
+            text: "\n%1 mm".arg((pointValue4[pointVar-1]/100).toFixed(2))
+            x:895
+            y:395
+            font.family:"Roboto"
+            color:"black"
+            font.pixelSize: 19
+        }
+    }
 
 
 
