@@ -29,9 +29,11 @@ sedD = []
 setFlagT1 = False
 setFlagT2 = False
 setFlagT3 = False
+setFlagT4 = False
 valueT1 = 0
 valueT2 = 0
 valueT3 = 0
+valueT4 = 0
 
 # 10ms 단위
 MaximumTimeout = (5*60*100)
@@ -62,9 +64,11 @@ def UpdateDBData():
 	global setFlagT1
 	global setFlagT2
 	global setFlagT3
+	global setFlagT4
 	global valueT1
 	global valueT2
 	global valueT3
+	global valueT4
 	global timeout_enable_flag
 	global TimeoutCnt
 	global ser1
@@ -76,6 +80,7 @@ def UpdateDBData():
 	tmp1 = str(valueT1)
 	tmp2 = str(valueT2)
 	tmp3 = str(valueT3)
+	tmp3 = str(valueT4)
 	count = str(nCount)
 
 	#데이터 입력
@@ -110,6 +115,9 @@ def UpdateDBData():
 
 	sedD.append(int(valueT3/100))
 	sedD.append(int(valueT3%100))
+
+	sedD.append(int(valueT4/100))
+	sedD.append(int(valueT4%100))
 	
 	sedD.append(0x43)
 	
@@ -121,6 +129,8 @@ def UpdateDBData():
 	valueT2 = 0
 	setFlagT3 = False
 	valueT3 = 0
+	setFlagT4 = False
+	valueT4 = 0
 
 	timeout_enable_flag = False
 	TimeoutCnt = MaximumTimeout
@@ -136,9 +146,11 @@ def parsing_data(data):
 	global setFlagT1
 	global setFlagT2
 	global setFlagT3
+	global setFlagT4
 	global valueT1
 	global valueT2
 	global valueT3
+	global valueT4
 	
 
 	nLen = data[1]
@@ -175,10 +187,18 @@ def parsing_data(data):
 				valueT3 += int.from_bytes(data[5],'big',signed=False)
 			else:
 				UpdateDBData()
+		elif nT == 3:
+			if setFlagT4 == False:
+				setFlagT4 = True
+				timeout_enable_flag = True
+				valueT4 = int.from_bytes(data[4],'big',signed=False) * 100
+				valueT4 += int.from_bytes(data[5],'big',signed=False)
+			else:
+				UpdateDBData()
 				
 		
 
-		if setFlagT1 == True and setFlagT2 == True and setFlagT3 == True:
+		if setFlagT1 == True and setFlagT2 == True and setFlagT3 == True and setFlagT4 == True:
 			UpdateDBData()
 		
 
@@ -242,6 +262,13 @@ def RequestThread(ser):
 			sedD.append(0x02)
 			sedD.append(0x03)
 			sedD.append(0x03)
+			sedD.append(0x43)
+			
+			sedD.append(0x44)
+			sedD.append(0x00)
+			sedD.append(0x02)
+			sedD.append(0x04)
+			sedD.append(0x04)
 			sedD.append(0x43)
 			
 			ser.write(sedD)
@@ -368,8 +395,11 @@ def BLEparsing_data(data):
 			
 			valueT3A = int.from_bytes(data[9],'big',signed=False) * 10
 			valueT3A += int.from_bytes(data[10],'big',signed=False) * 1
+			
+			valueT4A = int.from_bytes(data[11],'big',signed=False) * 10
+			valueT4A += int.from_bytes(data[12],'big',signed=False) * 1
 
-			setTimeYMD = ("{}-{}-{}".format(valueT1A,valueT2A,valueT3A))
+			setTimeYMD = ("{}-{}-{}-{}".format(valueT1A,valueT2A,valueT3A,valueT4A))
 			print(setTimeYMD)
 		elif nOp == bytes({0x03}):
 			valueT1A = int.from_bytes(data[3],'big',signed=False) * 10
@@ -380,8 +410,11 @@ def BLEparsing_data(data):
 			
 			valueT3A = int.from_bytes(data[7],'big',signed=False) * 10
 			valueT3A += int.from_bytes(data[8],'big',signed=False) * 1
+			
+			valueT4A = int.from_bytes(data[9],'big',signed=False) * 10
+			valueT4A += int.from_bytes(data[10],'big',signed=False) * 1
 
-			setTimeYMD = ("{} {}:{}:{}".format(setTimeYMD,valueT1A,valueT2A,valueT3A))
+			setTimeYMD = ("{} {}:{}:{}:{}".format(setTimeYMD,valueT1A,valueT2A,valueT3A,valueT4A))
 			print(setTimeYMD)
 			os.system('timedatectl set-ntp 0')
 			os.system('/home/pi/LineProgram/SetTimeS.sh '+setTimeYMD)
@@ -404,9 +437,10 @@ def BLEparsing_data(data):
 		nd1 = int.from_bytes(data[3],'big',signed=False)
 		nd2 = int.from_bytes(data[4],'big',signed=False)
 		nd3 = int.from_bytes(data[5],'big',signed=False)
+		nd4 = int.from_bytes(data[6],'big',signed=False)
 		
 		
-		Phonenum = (nd1*(256*256)) + (nd2*256) + (nd3)
+		Phonenum = (nd1*(256*256*256)) + (nd2*256*256) + (nd3*256) + (nd4)
 
 		print("======== Recv ========")
 		print("MyNum = ",num)
@@ -434,7 +468,8 @@ def BLEparsing_data(data):
 		#sedD.append(int(BLEnum/(256*256)))
 		#sedD.append(int((BLEnum/256)%256))
 		#sedD.append(int(BLEnum%256))
-		sedD.append(int(scnt00/(256*256)))
+		sedD.append(int(scnt00/(256*256*256)))
+		sedD.append(int((scnt00/(256*256)%256)))
 		sedD.append(int((scnt00/256)%256))
 		sedD.append(int(scnt00%256))
 		sedD.append(0x00)
@@ -484,6 +519,10 @@ def BLEparsing_data(data):
 				sedD.append(int(int(v[2])%100))
 				sedD.append(int(int(v[3])/100))
 				sedD.append(int(int(v[3])%100))
+				sedD.append(int(int(v[4])/100))
+				sedD.append(int(int(v[4])%100))
+				sedD.append(int(int(v[5])/100))
+				sedD.append(int(int(v[5])%100))
 				sedD.append(0x00)
 				sedD.append(0x43)
 				ser1.write(sedD)
@@ -542,6 +581,8 @@ def BLEparsing_data(data):
 					sedD.append(int(int(v[2])%100))
 					sedD.append(int(int(v[3])/100))
 					sedD.append(int(int(v[3])%100))
+					sedD.append(int(int(v[4])/100))
+					sedD.append(int(int(v[4])%100))
 					break
 
 				passCnt = passCnt + 1
@@ -559,7 +600,7 @@ if __name__ == "__main__":
 
 	#con = pymysql.connect(host="angnai.duckdns.org", port=6082, user="root", password="1234",
     #                   db='test', charset='utf8')
-	con = pymysql.connect(host="localhost", user='root', password='1234', port=3306, db='test', charset='utf8')
+	con = pymysql.connect(host="localhost", user='test', password='1234', port=3306, db='testdb', charset='utf8')
 	cur = con.cursor()
 
 	#시리얼 열기
