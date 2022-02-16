@@ -13,9 +13,10 @@ import os
 line = [] #라인 단위로 데이터 가져올 리스트 변수
 BLEline = []
 
-port = '/dev/ttyUSB0' # 시리얼 포트 Zigbee
+#port = '/dev/ttyUSB0' # 시리얼 포트 Zigbee
+port = 'COM2' # 시리얼 포트 Zigbee
 #port = 'COM3' # 시리얼 포트
-port1 = '/dev/ttyUSB1' # 시리얼 포트 BLE 연결
+#port1 = '/dev/ttyUSB1' # 시리얼 포트 BLE 연결
 #port1 = 'COM1' # 시리얼 포트
 
 baud = 115200 # 시리얼 보드레이트(통신속도)
@@ -80,11 +81,12 @@ def UpdateDBData():
 	tmp1 = str(valueT1)
 	tmp2 = str(valueT2)
 	tmp3 = str(valueT3)
-	tmp3 = str(valueT4)
+	tmp4 = str(valueT4)
 	count = str(nCount)
 
 	#데이터 입력
-	sql="insert into data values (\'" + timeA + "\',\'"  + tmp1 + "\',\'"  + tmp2 + "\',\'" + tmp3 + "\',\'"  + count + "\')"
+	sql="insert into data values (\'" + timeA + "\',\'"  + tmp1 + "\',\'"  + tmp2 + "\',\'" + tmp3 + "\',\'" + tmp4 + "\',\'"  + count + "\')"
+	#print(sql)
 	cur.execute(sql)
 	con.commit()
 	
@@ -121,7 +123,7 @@ def UpdateDBData():
 	
 	sedD.append(0x43)
 	
-	ser1.write(sedD)
+	#ser1.write(sedD)
 
 	setFlagT1 = False
 	valueT1 = 0
@@ -601,11 +603,12 @@ if __name__ == "__main__":
 	#con = pymysql.connect(host="angnai.duckdns.org", port=6082, user="root", password="1234",
     #                   db='test', charset='utf8')
 	con = pymysql.connect(host="localhost", user='test', password='1234', port=3306, db='testdb', charset='utf8')
+	#con = pymysql.connect(host="192.168.56.1", user='test', password='1234', port=3306, db='testdb', charset='utf8')
 	cur = con.cursor()
 
 	#시리얼 열기
 	ser = serial.Serial(port, baud, timeout=0)
-	ser1 = serial.Serial(port1, baud, timeout=0)
+	#ser1 = serial.Serial(port1, baud, timeout=0)
 
 
 
@@ -615,8 +618,8 @@ if __name__ == "__main__":
 	thread = threading.Thread(target=readThread_U1, args=(ser,))
 
 	
-	thread4 = threading.Thread(target=BLEreadThread_U1, args=())
+	#thread4 = threading.Thread(target=BLEreadThread_U1, args=())
 
 	#시작!
 	thread.start()
-	thread4.start()
+	#thread4.start()
