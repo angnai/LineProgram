@@ -123,10 +123,10 @@ Window {
         */
 
 
-        lb_val_0.text = "\n%1mm".arg((pointValue[pointVar-1]/100).toFixed(2))
-        lb_val_1.text = "\n%1mm".arg((pointValue2[pointVar-1]/100).toFixed(2))
-        lb_val_2.text = "\n%1mm".arg((pointValue3[pointVar-1]/100).toFixed(2))
-        lb_val_3.text = "\n%1mm".arg((pointValue4[pointVar-1]/100).toFixed(2))
+        lb_val_0.text = "\n%1".arg((pointValue[pointVar-1]/100).toFixed(2))
+        lb_val_1.text = "\n%1".arg((pointValue2[pointVar-1]/100).toFixed(2))
+        lb_val_2.text = "\n%1".arg((pointValue3[pointVar-1]/100).toFixed(2))
+        lb_val_3.text = "\n%1".arg((pointValue4[pointVar-1]/100).toFixed(2))
         root.requestPaint()
     }
     /*
@@ -298,10 +298,10 @@ Window {
                             lb_img11_3.text = "\n%1 mm".arg((errorHeight/100).toFixed(2))
                             #endif
                         */
-                            lb_val_0.text = "\n%1mm".arg((pointValue[pointVar-1]/100).toFixed(2))
-                            lb_val_1.text = "\n%1mm".arg((pointValue2[pointVar-1]/100).toFixed(2))
-                            lb_val_2.text = "\n%1mm".arg((pointValue3[pointVar-1]/100).toFixed(2))
-                            lb_val_3.text = "\n%1mm".arg((pointValue4[pointVar-1]/100).toFixed(2))
+                            lb_val_0.text = "\n%1".arg((pointValue[pointVar-1]/100).toFixed(2))
+                            lb_val_1.text = "\n%1".arg((pointValue2[pointVar-1]/100).toFixed(2))
+                            lb_val_2.text = "\n%1".arg((pointValue3[pointVar-1]/100).toFixed(2))
+                            lb_val_3.text = "\n%1".arg((pointValue4[pointVar-1]/100).toFixed(2))
 
                             root.requestPaint()
                         }
@@ -872,36 +872,36 @@ Window {
         }
         Text {
             id: lb_val_0
-            text: "\n%1 mm".arg((pointValue[pointVar-1]/100).toFixed(2))
-            x:707
-            y:227
+            text: "\n%1 ".arg((pointValue[pointVar-1]/100).toFixed(2))
+            x:690
+            y:248 - offset_y
             font.family:"Roboto"
             color:"black"
             font.pixelSize: 19
         }
         Text {
             id: lb_val_1
-            text: "\n%1 mm".arg((pointValue2[pointVar-1]/100).toFixed(2))
-            x:895
-            y:227
+            text: "\n%1 ".arg((pointValue2[pointVar-1]/100).toFixed(2))
+            x:915
+            y:248 - offset_y
             font.family:"Roboto"
             color:"black"
             font.pixelSize: 19
         }
         Text {
             id: lb_val_2
-            text: "\n%1 mm".arg((pointValue3[pointVar-1]/100).toFixed(2))
-            x:707
-            y:395
+            text: "\n%1 ".arg((pointValue3[pointVar-1]/100).toFixed(2))
+            x:690
+            y:403 - offset_y
             font.family:"Roboto"
             color:"black"
             font.pixelSize: 19
         }
         Text {
             id: lb_val_3
-            text: "\n%1 mm".arg((pointValue4[pointVar-1]/100).toFixed(2))
-            x:895
-            y:395
+            text: "\n%1 ".arg((pointValue4[pointVar-1]/100).toFixed(2))
+            x:915
+            y:403 - offset_y
             font.family:"Roboto"
             color:"black"
             font.pixelSize: 19
