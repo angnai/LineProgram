@@ -457,8 +457,8 @@ Window {
 
                 // begin a new path to draw
                 ctx.beginPath()
-                ctx.strokeStyle = "rgb(255,255,0)"
-                ctx2.fillStyle = "rgb(255,255,0)"
+                ctx.strokeStyle = "rgb(11,72,107)"
+                ctx2.fillStyle = "rgb(11,72,107)"
 
                 posX = 164;
                 if(pointValue4[0] < errorHeight) ctx.moveTo(posX,minPosY - offset_y);
