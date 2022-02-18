@@ -108,7 +108,7 @@ def data_search(data):
 	# print("count=",num)
 	trans_str = ("{}\r\n".format(num))
 	for v in result_sort:
-		trans_str += ("{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4]))
+		trans_str += ("{}\t{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4],v[5]))
 	
 	conn.commit()
 	return trans_str
@@ -139,7 +139,7 @@ def data_search_index(data):
 	# print("count=",num)
 	trans_str = ("{}\r\n".format(num))
 	for v in result_sort:
-		trans_str += ("{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4]))
+		trans_str += ("{}\t{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4],v[5]))
 	
 	conn.commit()
 	return trans_str
@@ -153,7 +153,7 @@ def data_read():
 	#print("count=",num)
 	trans_str = ("{}\r\n".format(num))
 	for v in result_sort:
-		trans_str += ("{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4]))
+		trans_str += ("{}\t{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4],v[5]))
 
 	conn.commit()
 	return trans_str
@@ -167,7 +167,7 @@ def data_read_all():
 	#print("count=",num)
 	trans_str = ("{}\r\n".format(num))
 	for v in result_sort:
-		trans_str += ("{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4]))
+		trans_str += ("{}\t{}\t{}\t{}\t{}\t{}\r\n".format(v[0],v[1],v[2],v[3],v[4],v[5]))
 
 	conn.commit()
 	return trans_str
